@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./fantasy-backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./fantasy-backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
