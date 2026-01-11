@@ -1,0 +1,36 @@
+version: "3.9"
+
+networks:
+  fantasy-net:
+
+volumes:
+  redis-data:
+
+services:
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    networks:
+      - fantasy-net
+    volumes:
+      - redis-data:/data
+
+  backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env.production
+    depends_on:
+      - redis
+    networks:
+      - fantasy-net
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - fantasy-net
