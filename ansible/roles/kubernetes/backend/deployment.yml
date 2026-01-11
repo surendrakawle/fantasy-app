@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fantasy-backend
+  namespace: fantasy-prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fantasy-backend
+  template:
+    metadata:
+      labels:
+        app: fantasy-backend
+    spec:
+      containers:
+      - name: backend
+        image: yourrepo/fantasy-backend:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"

@@ -1,0 +1,6 @@
+# App deployment
+- hosts: prod
+  become: true
+  tasks:
+    - name: Deploy Kubernetes manifests
+      command: kubectl apply -f /opt/fantasy/kubernetes/

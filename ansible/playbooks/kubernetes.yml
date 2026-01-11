@@ -1,0 +1,5 @@
+# K8s setup
+- hosts: prod
+  become: true
+  roles:
+    - kubernetes

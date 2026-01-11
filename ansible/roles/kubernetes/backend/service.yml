@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fantasy-backend-svc
+  namespace: fantasy-prod
+spec:
+  selector:
+    app: fantasy-backend
+  ports:
+    - port: 80
+      targetPort: 3000

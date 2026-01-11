@@ -1,0 +1,5 @@
+# EC2 base setup
+- hosts: prod
+  become: true
+  roles:
+    - common
