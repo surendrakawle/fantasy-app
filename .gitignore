@@ -1,4 +1,5 @@
 # Node dependencies
 node_modules/
 fantasy-backend/node_modules/
-fantasy-backend/.env.*
+fantasy-backend/.env.ict
+.DS_Store
