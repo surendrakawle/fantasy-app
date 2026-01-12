@@ -39,7 +39,12 @@ app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
 app.use(metricsMiddleware);
-
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "Fantasy API is running",
+  });
+});
 app.use("/admin", adminRoutes);
 app.use("/admin/queues", serverAdapter.getRouter());
 app.use("/observability", observabilityRoutes);
