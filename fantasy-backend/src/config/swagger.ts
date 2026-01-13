@@ -10,7 +10,7 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [
       {
-        url: "http://fantasy-api.online/",
+        url: "https://fantasy-api.online/",
         description: "ICT Server"
       }
     ],
