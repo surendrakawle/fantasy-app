@@ -35,7 +35,7 @@ createBullBoard({
 
 
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(httpLogger);
 app.use(metricsMiddleware);
