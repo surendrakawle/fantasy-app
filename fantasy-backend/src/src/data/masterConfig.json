@@ -1,0 +1,21 @@
+{
+    "key": "GLOBAL_SETTINGS",
+    "websiteName": "Tata Online",
+    "support": {
+      "helpEmail": "help@tataonline.co.in",
+      "whatsappNumber": "+91XXXXXXXXXX"
+    },
+    "features": {
+      "enableDeposit": true,
+      "enableWithdrawal": false,
+      "enablePrediction": true
+    },
+    "maintenance": {
+      "enabled": false,
+      "message": {
+        "en": "We are upgrading our servers",
+        "hi": "हमारी वेबसाइट अपडेट हो रही है"
+      }
+    }
+  }
+  

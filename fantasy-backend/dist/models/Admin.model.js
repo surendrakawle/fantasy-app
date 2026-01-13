@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Admin = void 0;
+const mongoose_1 = require("mongoose");
+const adminSchema = new mongoose_1.Schema({
+    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", unique: true },
+    role: { type: String, default: "ADMIN" },
+    createdAt: { type: Date, default: Date.now }
+});
+exports.Admin = (0, mongoose_1.model)("Admin", adminSchema);

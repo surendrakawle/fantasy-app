@@ -1,0 +1,42 @@
+import { Router } from "express";
+
+import adminRoutes from "./admin.routes";
+import authRoutes from "./auth.routes";
+import userRoutes from "./user.routes";
+import walletRoutes from "./wallet.routes";
+import withdrawalRoutes from "./withdraw.routes";
+import contestRoutes from "./contest.routes";
+import predictionRoutes from "./prediction.routes";
+import userPredictionRoutes from "./user.prediction.routes";
+import leaderboardRoutes from "./leaderboard.routes";
+import healthRoutes from "./health.routes";
+import teamRoutes from "./team.routes";
+import adminPlayerStatsRoutes from "./admin.playerStats.routes";
+import adminPlayerRoutes from "./player.routes";
+import masterConfig from "./masterConfig.routes";
+import masterPaymentMethodRoutes from "./masterPaymentMethod.routes";
+import userBankAccountRoutes from "./userBankAccount.routes";
+import adminBankRoutes from "./adminBank.routes";
+import depositRoutes from "./deposit.routes";
+const router = Router();
+
+router.use("/auth", authRoutes);
+router.use("/user", userRoutes);
+router.use("/user/predictions", userPredictionRoutes);
+router.use("/wallet", walletRoutes);
+router.use("/withdraw", withdrawalRoutes);
+router.use("/contests", contestRoutes);
+router.use("/predictions", predictionRoutes);
+router.use("/leaderboard", leaderboardRoutes);
+router.use("/admin", adminRoutes);
+router.use("/health", healthRoutes);
+router.use("/teams", teamRoutes);
+router.use("/admin", adminPlayerStatsRoutes);
+router.use("/admin", adminBankRoutes);
+router.use("/players", adminPlayerRoutes);
+router.use("/master/config", masterConfig);
+router.use("/payment-methods", masterPaymentMethodRoutes);
+router.use("/user", userBankAccountRoutes);
+router.use("/deposit", depositRoutes);
+
+export default router;
