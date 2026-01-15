@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PredictionService } from "../services/prediction.service";
 import { mapUserPrediction } from "../mappers/userPrediction.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 import { mapPrediction } from "../mappers/prediction.mapper";
 
 export const submitPrediction = async (req: any, res: Response) => {

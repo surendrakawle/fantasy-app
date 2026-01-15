@@ -7,7 +7,7 @@ import { env } from "./config/env";
 
 connectDB();
 const server = http.createServer(app);
-// initSocket(server);
+initSocket(server);
 
 server.listen(env.PORT, () => {
   console.log(`🚀 Server running on port ${env.PORT}`);

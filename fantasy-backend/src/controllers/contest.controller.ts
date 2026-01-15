@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ContestService } from "../services/contest.service";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 import { mapContest } from "../mappers/contest.mapper";
 
 /* -------------------- LIST CONTESTS -------------------- */

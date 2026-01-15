@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { UserBankAccountService } from "../services/userBankAccount.service";
 import { mapUserBankAccount } from "../mappers/userBankAccount.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 
 export const listMyBankAccounts = async (req: any, res: Response) => {
   try {

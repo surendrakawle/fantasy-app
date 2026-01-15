@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AdminBankService } from "../services/adminBank.service";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 import { mapUserBankAccount } from "../mappers/userBankAccount.mapper";
 
 export const approveUserBank = async (req: any, res: Response) => {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { LeaderboardService } from "../services/leaderboard.service";
 import { mapLeaderboard } from "../mappers/leaderboard.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 
 export const getLeaderboard = async (req: Request, res: Response) => {
   try {

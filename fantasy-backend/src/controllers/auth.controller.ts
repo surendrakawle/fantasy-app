@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 import { mapAuthResponse } from "../mappers/auth.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 
 export const googleLogin = async (req: Request, res: Response) => {
   try {

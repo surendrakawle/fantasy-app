@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { MasterConfigService } from "../services/masterConfig.service";
 import { mapMasterConfig } from "../mappers/masterConfig.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 
 /* -------------------- PUBLIC -------------------- */
 export const getMasterConfig = async (

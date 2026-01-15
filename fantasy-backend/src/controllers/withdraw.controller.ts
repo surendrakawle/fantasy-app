@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { WithdrawalService } from "../services/withdraw.service";
 import { mapWithdrawRequest } from "../mappers/withdraw.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse1";
 
 export const requestWithdraw = async (req: any, res: Response) => {
   try {
