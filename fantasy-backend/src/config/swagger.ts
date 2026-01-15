@@ -1,5 +1,7 @@
 import swaggerJsdoc from "swagger-jsdoc";
 
+const baseUrl = process.env.API_BASE_URL || "http://localhost:4000";
+
 export const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: "3.0.0",
@@ -12,8 +14,10 @@ export const swaggerSpec = swaggerJsdoc({
 
     servers: [
       {
-        url: "http://localhost:4000/api/v1",
-        description: "ICT Server"
+        url: `${baseUrl}/api/v1`,
+        description: process.env.NODE_ENV === "production"
+          ? "Production Server"
+          : "Development Server"
       }
     ],
 
@@ -34,9 +38,8 @@ export const swaggerSpec = swaggerJsdoc({
     ]
   },
 
-  // 🔥 MOST IMPORTANT PART
   apis: [
-    "./src/routes/**/*.ts",   // for development
-    "./dist/routes/**/*.js"   // for production build
+    "./src/routes/**/*.ts",
+    "./dist/routes/**/*.js"
   ]
 });
