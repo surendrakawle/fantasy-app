@@ -1,30 +1,26 @@
 import { Request, Response } from "express";
-import { WithdrawRequest } from "../models/WithdrawRequest.model";
-import { Wallet } from "../models/Wallet.model";
-import { fraudQueue } from "../queues/fraud.queue";
+import { WithdrawalService } from "../services/withdraw.service";
+import { mapWithdrawRequest } from "../mappers/withdraw.mapper";
+import { success, error } from "../utils/apiResponse";
 
 export const requestWithdraw = async (req: any, res: Response) => {
-  const { amount } = req.body;
+  try {
+    const { amount } = req.body;
+    const userId = req.user.userId;
 
-  const wallet = await Wallet.findOne({ userId: req.user.userId });
-  if (!wallet || wallet.balance < amount) {
-    return res.status(400).json({ message: "Insufficient balance" });
+    const withdrawRequest =
+      await WithdrawalService.requestWithdraw(userId, amount);
+
+    return success(
+      res,
+      mapWithdrawRequest(withdrawRequest),
+      "Withdraw request submitted",
+      201
+    );
+  } catch (err: any) {
+    const status =
+      err.message === "Insufficient wallet balance" ? 400 : 500;
+
+    return error(res, err.message, status);
   }
-
-  const tds = amount * 0.3; // example 30%
-  const net = amount - tds;
-
-  await WithdrawRequest.create({
-    userId: req.user.userId,
-    amount,
-    tdsAmount: tds,
-    netAmount: net
-  });
-
-  await fraudQueue.add("fraud-check", {
-    userId: req.user.userId,
-    fastWithdraw: true
-  });
-
-  res.json({ message: "Withdraw request submitted" });
 };

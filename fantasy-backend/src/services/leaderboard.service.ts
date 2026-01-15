@@ -1,33 +1,55 @@
 import redis from "../config/redis";
 
-export function leaderboardKey(contestId: string) {
-  return `leaderboard:${contestId}`;
-}
+const leaderboardKey = (contestId: string) =>
+  `leaderboard:${contestId}`;
 
-export async function addScore(
-  contestId: string,
-  userId: string,
-  score: number
-) {
-  await redis.zadd(leaderboardKey(contestId), score, userId);
-}
+export class LeaderboardService {
+  /* -------------------- ADD / UPDATE SCORE -------------------- */
+  static async addScore(
+    contestId: string,
+    userId: string,
+    score: number
+  ) {
+    if (!contestId || !userId) {
+      throw new Error("Invalid leaderboard params");
+    }
 
-export async function getTopUsers(
-  contestId: string,
-  limit = 10
-) {
-  return redis.zrevrange(
-    leaderboardKey(contestId),
-    0,
-    limit - 1,
-    "WITHSCORES"
-  );
-}
+    await redis.zadd(
+      leaderboardKey(contestId),
+      score,
+      userId
+    );
+  }
 
-export async function getUserRank(
-  contestId: string,
-  userId: string
-) {
-  const rank = await redis.zrevrank(leaderboardKey(contestId), userId);
-  return rank !== null ? rank + 1 : null;
+  /* -------------------- GET TOP USERS -------------------- */
+  static async getTopUsers(
+    contestId: string,
+    limit = 10
+  ) {
+    if (!contestId) {
+      throw new Error("contestId is required");
+    }
+
+    const raw = await redis.zrevrange(
+      leaderboardKey(contestId),
+      0,
+      limit - 1,
+      "WITHSCORES"
+    );
+
+    return raw;
+  }
+
+  /* -------------------- GET USER RANK -------------------- */
+  static async getUserRank(
+    contestId: string,
+    userId: string
+  ) {
+    const rank = await redis.zrevrank(
+      leaderboardKey(contestId),
+      userId
+    );
+
+    return rank !== null ? rank + 1 : null;
+  }
 }

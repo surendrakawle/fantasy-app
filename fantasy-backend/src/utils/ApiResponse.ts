@@ -1,12 +1,23 @@
-export class ApiResponse<T = any> {
-    success: boolean;
-    message: string;
-    data?: T;
-  
-    constructor(message: string, data?: T) {
-      this.success = true;
-      this.message = message;
-      this.data = data;
-    }
-  }
-  
+export const success = (
+  res: any,
+  data: any,
+  message = "Success",
+  statusCode = 200
+) => {
+  return res.status(statusCode).json({
+    success: true,
+    message,
+    data
+  });
+};
+
+export const error = (
+  res: any,
+  message = "Something went wrong",
+  statusCode = 500
+) => {
+  return res.status(statusCode).json({
+    success: false,
+    message
+  });
+};

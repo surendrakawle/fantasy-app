@@ -1,10 +1,23 @@
 import { Response, NextFunction } from "express";
-import { Admin } from "../models/Admin.model";
+import { error } from "../utils/apiResponse";
 
-export const adminOnly = async (req: any, res: Response, next: NextFunction) => {
-  const admin = await Admin.findOne({ userId: req.user.userId });
-  if (!admin) {
-    return res.status(403).json({ message: "Admin access required" });
+export const adminOnly = (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.user) {
+      return error(res, "Unauthorized", 401);
+    }
+    console.log(req.user)
+
+    if (req.user?.role !== "ADMIN") {
+      return error(res, "Admin access required", 403);
+    }
+
+    next();
+  } catch (err) {
+    return error(res, "Authorization failed", 500);
   }
-  next();
 };

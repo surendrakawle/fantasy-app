@@ -1,14 +1,36 @@
 import { Request, Response } from "express";
-import { Wallet } from "../models/Wallet.model";
-import { Transaction } from "../models/Transaction.model";
+import { WalletService } from "../services/wallet.service";
+import { success, error } from "../utils/apiResponse";
+import { mapWallet } from "../mappers/wallet.mapper";
+import { mapTransaction } from "../mappers/transaction.mapper";
 
+/* -------------------- GET WALLET BALANCE -------------------- */
 export const getBalance = async (req: any, res: Response) => {
-  const wallet = await Wallet.findOne({ userId: req.user.userId });
-  res.json(wallet);
+  try {
+    const wallet = await WalletService.getBalance(req.user.userId);
+
+    return success(
+      res,
+      mapWallet(wallet),
+      "Wallet balance fetched"
+    );
+  } catch (err: any) {
+    return error(res, err.message, 404);
+  }
 };
 
+/* -------------------- GET WALLET TRANSACTIONS -------------------- */
 export const getTransactions = async (req: any, res: Response) => {
-  const txns = await Transaction.find({ userId: req.user.userId })
-    .sort({ createdAt: -1 });
-  res.json(txns);
+  try {
+    const transactions =
+      await WalletService.getTransactions(req.user.userId);
+
+    return success(
+      res,
+      transactions.map(mapTransaction),
+      "Transactions fetched"
+    );
+  } catch (err: any) {
+    return error(res, err.message);
+  }
 };

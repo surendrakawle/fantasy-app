@@ -75,5 +75,12 @@ const userSchema = new Schema<IUser>(
 userSchema.index({ email: 1 });
 userSchema.index({ googleId: 1 });
 userSchema.index({ role: 1, isBlocked: 1 });
+userSchema.set("toJSON", {
+  transform: (_, ret) => {
+    delete ret.__v;
+    delete ret.updatedAt;
+    return ret;
+  }
+});
 
 export const User = model<IUser>("User", userSchema);

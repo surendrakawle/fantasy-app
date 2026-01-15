@@ -1,32 +1,80 @@
 import { Request, Response } from "express";
-import { Match } from "../models/Match.model";
-import { Contest } from "../models/Contest.model";
-import { Prediction } from "../models/Prediction.model";
-import { resultQueue } from "../queues/result.queue";
+import { AdminService } from "../services/admin.service";
+import { success, error } from "../utils/apiResponse";
+import {WithdrawalAdminService} from "../services/withdrawal.admin.service";
+import {
+  mapMatch,
+  mapContest,
+  mapPrediction
+} from "../mappers/admin.mapper";
 
+/* -------------------- CREATE MATCH -------------------- */
 export const createMatch = async (req: Request, res: Response) => {
-  const match = await Match.create(req.body);
-  res.json(match);
+  try {
+    const match = await AdminService.createMatch(req.body);
+    return success(res, mapMatch(match), "Match created", 201);
+  } catch (err: any) {
+    return error(res, err.message, 400);
+  }
 };
 
+/* -------------------- CREATE CONTEST -------------------- */
 export const createContest = async (req: Request, res: Response) => {
-  const contest = await Contest.create(req.body);
-  res.json(contest);
+  try {
+    const contest = await AdminService.createContest(req.body);
+    return success(res, mapContest(contest), "Contest created", 201);
+  } catch (err: any) {
+    return error(res, err.message, 400);
+  }
 };
 
+/* -------------------- CREATE PREDICTION -------------------- */
 export const createPrediction = async (req: Request, res: Response) => {
-  const prediction = await Prediction.create(req.body);
-  res.json(prediction);
+  try {
+    const prediction = await AdminService.createPrediction(req.body);
+    return success(
+      res,
+      mapPrediction(prediction),
+      "Prediction created",
+      201
+    );
+  } catch (err: any) {
+    return error(res, err.message, 400);
+  }
 };
 
+/* -------------------- PUBLISH RESULT -------------------- */
 export const publishResult = async (req: Request, res: Response) => {
-  const { contestId } = req.body;
-
-  await resultQueue.add(
-    "calculate-result",
-    { contestId },
-    { jobId: `result-${contestId}` }
-  );
-
-  res.json({ message: "Result job queued" });
+  try {
+    await AdminService.publishResult(req.body.contestId);
+    return success(res, null, "Result job queued");
+  } catch (err: any) {
+    return error(res, err.message, 400);
+  }
 };
+
+export const approveWithdraw = async (req: any, res: any) => {
+  try {
+    const wr = await WithdrawalAdminService.approve(
+      req.params.id,
+      req.user.userId
+    );
+    return success(res, wr, "Withdrawal approved");
+  } catch (e: any) {
+    return error(res, e.message, 400);
+  }
+};
+
+export const rejectWithdraw = async (req: any, res: any) => {
+  try {
+    const wr = await WithdrawalAdminService.reject(
+      req.params.id,
+      req.user.userId,
+      req.body.reason
+    );
+    return success(res, wr, "Withdrawal rejected");
+  } catch (e: any) {
+    return error(res, e.message, 400);
+  }
+};
+

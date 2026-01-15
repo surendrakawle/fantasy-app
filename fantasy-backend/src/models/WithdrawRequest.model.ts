@@ -7,6 +7,9 @@ export interface IWithdrawRequest {
   netAmount: number;
   status: "PENDING" | "APPROVED" | "REJECTED" | "PAID";
   createdAt: Date;
+  processedBy: Types.ObjectId;
+  processedAt: Date;
+  rejectReason: String;
 }
 
 const schema = new Schema<IWithdrawRequest>({
@@ -15,6 +18,12 @@ const schema = new Schema<IWithdrawRequest>({
   tdsAmount: Number,
   netAmount: Number,
   status: { type: String, default: "PENDING" },
+  processedBy: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
+  processedAt: Date,
+  rejectReason: String,
   createdAt: { type: Date, default: Date.now }
 });
 

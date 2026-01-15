@@ -1,10 +1,21 @@
 version: "3.9"
 
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: fantasy-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    restart: always
+
   backend:
     build:
       context: ./fantasy-backend
       dockerfile: Dockerfile.dev
+    container_name: fantasy-backend
     ports:
       - "4000:4000"
     volumes:
@@ -12,8 +23,15 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=ict
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    restart: always
+
   nginx:
     image: nginx:alpine
+    container_name: fantasy-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -24,3 +42,5 @@ services:
       - backend
     restart: always
 
+volumes:
+  redis-data:

@@ -11,7 +11,7 @@ export interface ITransaction {
   userId: Types.ObjectId;
   type: TransactionType;
   amount: number;
-  reference?: string;
+  reason?: string;
   createdAt: Date;
 }
 
@@ -19,7 +19,7 @@ const transactionSchema = new Schema<ITransaction>({
   userId: { type: Schema.Types.ObjectId, ref: "User", index: true },
   type: { type: String, required: true },
   amount: { type: Number, required: true },
-  reference: String,
+  reason: String,
   createdAt: { type: Date, default: Date.now }
 });
 
