@@ -1,56 +1,27 @@
 import { Worker } from "bullmq";
-import mongoose from "mongoose";
-import { queueRedis } from "../config/queueRedis";
-import { Wallet } from "../models/Wallet.model";
-import { Result } from "../models/Result.model";
-import { Transaction } from "../models/Transaction.model";
+import { redisOptions } from "../config/redis";
+import { WALLET_QUEUE_NAME } from "../queues/wallet.queue";
+import { WalletService } from "../services/wallet.service";
 
-new Worker(
-  "wallet-queue",
+const worker = new Worker(
+  WALLET_QUEUE_NAME,
   async (job) => {
-    const { contestId } = job.data;
+    const { userId, amount } = job.data;
 
-    const winners = await Result.find({
-      contestId,
-      credited: false,
-      winningAmount: { $gt: 0 }
-    });
+    console.log(`💰 Crediting wallet: ${userId} +${amount}`);
 
-    for (const win of winners) {
-      const session = await mongoose.startSession();
-      session.startTransaction();
-
-      try {
-        await Wallet.updateOne(
-          { userId: win.userId },
-          { $inc: { balance: win.winningAmount } },
-          { session }
-        );
-
-        await Transaction.create(
-          [{
-            userId: win.userId,
-            type: "WIN",
-            amount: win.winningAmount,
-            reference: `Contest ${contestId}`
-          }],
-          { session }
-        );
-
-        win.credited = true;
-        await win.save({ session });
-
-        await session.commitTransaction();
-      } catch (e) {
-        await session.abortTransaction();
-        throw e;
-      } finally {
-        session.endSession();
-      }
-    }
+    // await WalletService.credit(userId, amount);
   },
   {
-    connection: queueRedis,
-    concurrency: 3
+    connection: redisOptions,
+    concurrency: 5
   }
 );
+
+worker.on("completed", (job) => {
+  console.log(`✅ Wallet job completed: ${job.id}`);
+});
+
+worker.on("failed", (job, err) => {
+  console.error(`❌ Wallet job failed: ${job?.id}`, err);
+});

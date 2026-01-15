@@ -1,33 +1,40 @@
 import Redis from "ioredis";
+import { RedisOptions } from "bullmq";
 import { env } from "./env";
 
-const redis = new Redis({
+/* ------------------ BullMQ Redis Options ------------------ */
+export const redisOptions: RedisOptions = {
   host: env.REDIS_HOST,
   port: env.REDIS_PORT,
   password: env.REDIS_PASSWORD,
   db: env.REDIS_DB,
-  maxRetriesPerRequest: 3,
-  enableReadyCheck: true,
+  maxRetriesPerRequest: null, // REQUIRED for BullMQ
+  enableReadyCheck: false     // REQUIRED for BullMQ
+};
+
+/* ------------------ ioredis Client ------------------ */
+export const redisClient = new Redis({
+  ...redisOptions,
   lazyConnect: true,
   retryStrategy(times) {
     return Math.min(times * 100, 2000);
   }
 });
 
-redis.on("connect", () => {
+redisClient.on("connect", () => {
   console.log("🔌 Redis connecting...");
 });
 
-redis.on("ready", () => {
+redisClient.on("ready", () => {
   console.log("✅ Redis connected");
 });
 
-redis.on("error", (err) => {
+redisClient.on("error", (err) => {
   console.error("❌ Redis error:", err.message);
 });
 
-redis.on("close", () => {
+redisClient.on("close", () => {
   console.warn("⚠️ Redis connection closed");
 });
 
-export default redis;
+export default redisClient;

@@ -1,23 +1,27 @@
 import { Worker } from "bullmq";
-import { queueRedis } from "../config/queueRedis";
-import { calculateResults } from "../jobs/resultCalculation.job";
-import { walletQueue } from "../queues/wallet.queue";
+import { redisOptions } from "../config/redis";
+import { RESULT_QUEUE_NAME } from "../queues/result.queue";
+import { ResultService } from "../services/result.service";
 
-
-
-new Worker(
-  "result-queue",
+const worker = new Worker(
+  RESULT_QUEUE_NAME,
   async (job) => {
     const { contestId } = job.data;
 
-    console.log("🏁 Processing result for contest:", contestId);
+    console.log(`🏁 Calculating result for contest ${contestId}`);
 
-    await calculateResults(contestId);
-    await walletQueue.add("credit-winners", { contestId });
+    await ResultService.publishMatchResult(contestId);
   },
   {
-    connection: queueRedis,
-    concurrency: 5
+    connection: redisOptions,
+    concurrency: 2
   }
 );
-//Workers should ideally run as separate process.
+
+worker.on("completed", (job) => {
+  console.log(`✅ Result job completed: ${job.id}`);
+});
+
+worker.on("failed", (job, err) => {
+  console.error(`❌ Result job failed: ${job?.id}`, err);
+});
