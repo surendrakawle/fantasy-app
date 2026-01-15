@@ -46,7 +46,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
-      - face-server
+      # - face-server
     restart: always
 
 volumes:
