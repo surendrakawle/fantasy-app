@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { MasterConfigService } from "../services/masterConfig.service";
-import { error } from "../utils/ApiResponse1";
+import { error } from "../utils/ApiResponse";
 
 export const maintenanceMiddleware = async (
   req: Request,

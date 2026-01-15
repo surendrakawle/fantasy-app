@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { DepositService } from "../services/deposit.service";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 
 /* -------- USER -------- */
 export const createDepositRequest = async (req: any, res: Response) => {

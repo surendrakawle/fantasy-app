@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { TeamService } from "../services/team.service";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 import { mapUserTeam } from "../mappers/userTeam.mapper";
 import { UserTeam } from "../models/UserTeam.model";
 

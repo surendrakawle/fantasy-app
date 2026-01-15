@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PlayerService } from "../services/player.service";
 import { mapPlayer } from "../mappers/player.mapper";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 
 export const createPlayer = async (req: Request, res: Response) => {
   try {

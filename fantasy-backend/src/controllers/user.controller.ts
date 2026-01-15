@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
 import { mapUser } from "../mappers/user.mapper";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 
 export const getMe = async (req: any, res: Response) => {
   try {

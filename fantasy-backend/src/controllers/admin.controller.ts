@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AdminService } from "../services/admin.service";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 import {WithdrawalAdminService} from "../services/withdrawal.admin.service";
 import {
   mapMatch,

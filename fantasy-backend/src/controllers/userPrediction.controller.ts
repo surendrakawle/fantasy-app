@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { UserPredictionService } from "../services/userPrediction.service";
 import { mapUserPrediction } from "../mappers/userPrediction.mapper";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 
 export const getMyPredictionsByContest = async (
   req: any,

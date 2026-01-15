@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { error } from "../utils/ApiResponse1";
+import { error } from "../utils/ApiResponse";
 
 export const adminOnly = (
   req: any,

@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { PlayerStats } from "../models/PlayerStats.model";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 import { mapPlayerStats } from "../mappers/playerStats.mapper";
 
 export const upsertPlayerStats = async (req: any, res: Response) => {

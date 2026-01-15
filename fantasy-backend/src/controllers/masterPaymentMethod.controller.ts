@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { MasterPaymentMethodService } from "../services/masterPaymentMethod.service";
 import { mapMasterPaymentMethod } from "../mappers/masterPaymentMethod.mapper";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 
 /* -------- PUBLIC -------- */
 export const listPaymentMethods = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { WalletService } from "../services/wallet.service";
-import { success, error } from "../utils/ApiResponse1";
+import { success, error } from "../utils/ApiResponse";
 import { mapWallet } from "../mappers/wallet.mapper";
 import { mapTransaction } from "../mappers/transaction.mapper";
 
