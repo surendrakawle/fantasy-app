@@ -28,7 +28,10 @@ services:
     depends_on:
       - redis
     restart: always
-
+  face-server:
+    image: face-server
+    container_name: face-server
+    restart: always
   nginx:
     image: nginx:alpine
     container_name: fantasy-nginx
@@ -40,6 +43,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
+      - face-server
     restart: always
 
 volumes:
