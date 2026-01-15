@@ -29,12 +29,12 @@ services:
       - redis
     restart: always
 
-  face-server:
-    build: ./face-server
-    image: face-server
-    container_name: face-server
-    restart: always
-    
+  # face-server:
+  #   build: ./face-server
+  #   image: face-server
+  #   container_name: face-server
+  #   restart: always
+
   nginx:
     image: nginx:alpine
     container_name: fantasy-nginx
