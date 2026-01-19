@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ContestService } from "../services/contest.service";
 import { mapContest } from "../mappers/contest.mapper";
-import { success, error } from "../utils/apiResponse";
+import { success, error } from "../utils/ApiResponse";
 
 /* ---------------- ADMIN ---------------- */
 
