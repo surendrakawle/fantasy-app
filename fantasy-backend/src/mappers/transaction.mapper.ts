@@ -1,9 +1,19 @@
-export const mapTransaction = (txn: any) => ({
-    id: txn._id,
-    type: txn.type,               // CREDIT / DEBIT
-    amount: txn.amount,
-    reason: txn.reason,           // ENTRY_FEE / WINNING / REFUND
-    status: txn.status,           // SUCCESS / FAILED / PENDING
-    referenceId: txn.referenceId, // contestId / payoutId
-    createdAt: txn.createdAt
-  });
+import { ITransaction } from "../models/Transaction.model";
+
+export const mapTransaction = (t: ITransaction) => ({
+  id: t._id,
+
+  userId: t.userId,
+
+  type: t.type,
+
+  contest: t.contest,
+  prediction: t.prediction,
+  deposit: t.deposit,
+  withdraw: t.withdraw,
+
+  amount: t.amount,
+  reason: t.reason,
+
+  createdAt: t.createdAt
+});

@@ -19,6 +19,7 @@ import userBankAccountRoutes from "./userBankAccount.routes";
 import adminBankRoutes from "./adminBank.routes";
 import depositRoutes from "./deposit.routes";
 import matchRoutes from "./match.routes";
+import transactionRoutes from "./transaction.routes";
 const router = Router();
 
 router.use("/auth", authRoutes);
@@ -28,6 +29,7 @@ router.use("/wallet", walletRoutes);
 router.use("/withdraw", withdrawalRoutes);
 router.use("/", contestRoutes);
 router.use("/", predictionRoutes);
+router.use("/", transactionRoutes);
 router.use("/leaderboard", leaderboardRoutes);
 router.use("/admin", adminRoutes);
 router.use("/health", healthRoutes);
