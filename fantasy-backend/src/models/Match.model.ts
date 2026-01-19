@@ -1,11 +1,11 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-export interface IMatch {
+export interface IMatch extends Document {
   sport: string;
   teamA: string;
   teamB: string;
   startTime: Date;
-  status: "UPCOMING" | "LIVE" | "COMPLETED";
+  status: "UPCOMING" | "LIVE" | "COMPLETED" | "CANCELLED";
   resultProcessed: boolean;
   createdAt: Date;
 }
@@ -20,4 +20,4 @@ const matchSchema = new Schema<IMatch>({
   createdAt: { type: Date, default: Date.now }
 });
 
-export const Match = model<IMatch>("Match", matchSchema);
+export const Match = mongoose.model<IMatch>("Match", matchSchema);

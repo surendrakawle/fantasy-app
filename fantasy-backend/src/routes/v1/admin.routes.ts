@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  createMatch,
   createContest,
   createPrediction,
   publishResult,
@@ -12,61 +11,6 @@ import { adminOnly } from "../../middlewares/admin.middleware";
 import { listUsers, updateUserAdmin } from "../../controllers/user.controller";
 
 const router = Router();
-
-/**
- * @swagger
- * tags:
- *   name: Admin
- *   description: Admin-only APIs for match, contest & result management
- */
-
-/* -------------------------------------------------------------------------- */
-/*                               CREATE MATCH                                 */
-/* -------------------------------------------------------------------------- */
-/**
- * @swagger
- * /admin/match:
- *   post:
- *     summary: Create a new match
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           example:
- *             teamA: India
- *             teamB: Australia
- *             sport: CRICKET
- *             startTime: 2026-02-10T14:00:00Z
- *     responses:
- *       201:
- *         description: Match created successfully
- *         content:
- *           application/json:
- *             example:
- *               success: true
- *               message: Match created
- *               data:
- *                 id: 65ca111abc
- *                 teamA: India
- *                 teamB: Australia
- *       400:
- *         description: Invalid input
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: Invalid request payload
- *       401:
- *         description: Unauthorized
- *       403:
- *         description: Admin access only
- *       500:
- *         description: Internal server error
- */
-router.post("/match", authMiddleware, adminOnly, createMatch);
 
 /* -------------------------------------------------------------------------- */
 /*                               CREATE CONTEST                                */

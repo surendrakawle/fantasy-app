@@ -1,10 +1,15 @@
-export const mapPrediction = (prediction: any) => ({
-    id: prediction._id,
-    contestId: prediction.contestId,
-    question: prediction.question,
-    options: prediction.options,
-    points: prediction.points,
-    order: prediction.order,
-    createdAt: prediction.createdAt
-  });
-  
+import { IPrediction } from "../models/Prediction.model";
+
+export const mapPrediction = (p: IPrediction) => ({
+  id: p?._id,
+  contestId: p.contestId,
+
+  question: p.question,
+  options: p.options,
+
+  correctAnswer: p.correctAnswer,
+  points: p.points,
+  order: p.order,
+
+  createdAt: p.createdAt
+});

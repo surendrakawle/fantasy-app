@@ -8,15 +8,7 @@ import {
   mapPrediction
 } from "../mappers/admin.mapper";
 
-/* -------------------- CREATE MATCH -------------------- */
-export const createMatch = async (req: Request, res: Response) => {
-  try {
-    const match = await AdminService.createMatch(req.body);
-    return success(res, mapMatch(match), "Match created", 201);
-  } catch (err: any) {
-    return error(res, err.message, 400);
-  }
-};
+
 
 /* -------------------- CREATE CONTEST -------------------- */
 export const createContest = async (req: Request, res: Response) => {

@@ -1,19 +1,18 @@
-export const mapContest = (contest: any) => ({
-  id: contest._id,
-  entryFee: contest.entryFee,
-  prizePool: contest.prizePool,
-  maxParticipants: contest.maxParticipants,
-  joinedCount: contest.joinedCount,
-  status: contest.status,
-  contestType: contest.contestType,
-  lockTime: contest.lockTime,
-  match: contest.match && {
-    id: contest.match._id,
-    teamA: contest.match.teamA,
-    teamB: contest.match.teamB,
-    sport: contest.match.sport,
-    startTime: contest.match.startTime,
-    status: contest.match.status,
-  },
-  createdAt: contest.createdAt
+import { IContest } from "../models/Contest.model";
+
+export const mapContest = (c: IContest) => ({
+  id: c._id,
+  matchId: c.matchId,
+  contestType: c.contestType,
+
+  entryFee: c.entryFee,
+  baseAmount: c.baseAmount,
+  multiplier: c.multiplier,
+
+  prizePool: c.prizePool,
+  maxParticipants: c.maxParticipants,
+  joinedCount: c.joinedCount,
+  lockTime: c.lockTime,
+  status: c.status,
+  createdAt: c.createdAt
 });

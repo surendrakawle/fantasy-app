@@ -1,66 +1,61 @@
-import mongoose from "mongoose";
 import { Contest } from "../models/Contest.model";
-import { ContestParticipant } from "../models/ContestParticipant.model";
-import { WalletService } from "./wallet.service";
 
 export class ContestService {
-  /* -------------------- LIST OPEN CONTESTS -------------------- */
-  static async listOpenContests() {
-    return Contest.find()
-        .populate("match", "teamA teamB startTime status")
-        .sort({ createdAt: -1 })
-        .lean();
+
+  /* ---------- ADMIN ---------- */
+
+  static async create(data: any) {
+    // Validation for contest types
+    if (data.contestType === "TEAM" && !data.entryFee) {
+      throw new Error("Entry fee required for TEAM contest");
+    }
+
+    if (data.contestType === "PREDICTION") {
+      if (!data.baseAmount || !data.multiplier) {
+        throw new Error("Base amount & multiplier required for PREDICTION contest");
+      }
+    }
+
+    return Contest.create(data);
   }
 
-  /* -------------------- JOIN CONTEST -------------------- */
-  static async joinContest(userId: string, contestId: string) {
-    if (!contestId) {
-      throw new Error("contestId is required");
-    }
+  static async update(contestId: string, data: any) {
+    const contest = await Contest.findByIdAndUpdate(
+      contestId,
+      data,
+      { new: true }
+    );
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    if (!contest) throw new Error("Contest not found");
+    return contest;
+  }
 
-    try {
-      const contest = await Contest.findById(contestId).populate("match", "teamA teamB startTime status").session(session);
+  static async delete(contestId: string) {
+    const contest = await Contest.findByIdAndDelete(contestId);
+    if (!contest) throw new Error("Contest not found");
+    return contest;
+  }
 
-      if (!contest || contest.status !== "OPEN") {
-        throw new Error("Contest not available");
-      }
+  static async listAll() {
+    return Contest.find().sort({ createdAt: -1 });
+  }
 
-      const alreadyJoined = await ContestParticipant.findOne({
-        contestId,
-        userId
-      }).session(session);
+  /* ---------- USER / PUBLIC ---------- */
 
-      if (alreadyJoined) {
-        throw new Error("Already joined contest");
-      }
+  static async listOpen() {
+    return Contest.find({ status: "OPEN" }).sort({ lockTime: 1 });
+  }
 
-      /* Debit wallet (atomic) */
-      await WalletService.debitWallet(userId, contest.entryFee, `Contest ${contestId}`, session);
+  static async listByMatch(matchId: string) {
+    return Contest.find({
+      matchId,
+      status: "OPEN"
+    }).sort({ createdAt: -1 });
+  }
 
-      await ContestParticipant.create(
-        [{ contestId, userId }],
-        { session }
-      );
-
-      contest.joinedCount += 1;
-
-      if (contest.joinedCount >= contest.maxParticipants) {
-        contest.status = "LOCKED";
-      }
-
-      await contest.save({ session });
-
-      await session.commitTransaction();
-      session.endSession();
-
-      return contest;
-    } catch (err) {
-      await session.abortTransaction();
-      session.endSession();
-      throw err;
-    }
+  static async getById(contestId: string) {
+    const contest = await Contest.findById(contestId);
+    if (!contest) throw new Error("Contest not found");
+    return contest;
   }
 }

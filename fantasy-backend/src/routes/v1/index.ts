@@ -18,15 +18,16 @@ import masterPaymentMethodRoutes from "./masterPaymentMethod.routes";
 import userBankAccountRoutes from "./userBankAccount.routes";
 import adminBankRoutes from "./adminBank.routes";
 import depositRoutes from "./deposit.routes";
+import matchRoutes from "./match.routes";
 const router = Router();
 
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
-router.use("/user/predictions", userPredictionRoutes);
+router.use("/user-predictions", userPredictionRoutes);
 router.use("/wallet", walletRoutes);
 router.use("/withdraw", withdrawalRoutes);
-router.use("/contests", contestRoutes);
-router.use("/predictions", predictionRoutes);
+router.use("/", contestRoutes);
+router.use("/", predictionRoutes);
 router.use("/leaderboard", leaderboardRoutes);
 router.use("/admin", adminRoutes);
 router.use("/health", healthRoutes);
@@ -38,5 +39,6 @@ router.use("/master/config", masterConfig);
 router.use("/payment-methods", masterPaymentMethodRoutes);
 router.use("/user", userBankAccountRoutes);
 router.use("/deposit", depositRoutes);
+router.use("/", matchRoutes);
 
 export default router;

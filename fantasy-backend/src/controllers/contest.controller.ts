@@ -1,39 +1,63 @@
 import { Request, Response } from "express";
 import { ContestService } from "../services/contest.service";
-import { success, error } from "../utils/ApiResponse";
 import { mapContest } from "../mappers/contest.mapper";
+import { success, error } from "../utils/apiResponse";
 
-/* -------------------- LIST CONTESTS -------------------- */
-export const listContests = async (_req: Request, res: Response) => {
+/* ---------------- ADMIN ---------------- */
+
+export const createContest = async (req: Request, res: Response) => {
   try {
-    const contests = await ContestService.listOpenContests();
-    return success(
-      res,
-      contests.map(mapContest),
-      "Open contests fetched"
-    );
-  } catch (err: any) {
-    return error(res, err.message);
+    const contest = await ContestService.create(req.body);
+    return success(res, mapContest(contest), "Contest created", 201);
+  } catch (e: any) {
+    return error(res, e.message, 400);
   }
 };
 
-/* -------------------- JOIN CONTEST -------------------- */
-export const joinContest = async (req: any, res: Response) => {
+export const updateContest = async (req: Request, res: Response) => {
   try {
-    const contestId = req.params.id;
-    const userId = req.user.userId;
+    const contest = await ContestService.update(req.params.id, req.body);
+    return success(res, mapContest(contest), "Contest updated");
+  } catch (e: any) {
+    return error(res, e.message, 400);
+  }
+};
 
-    const contest = await ContestService.joinContest(userId, contestId);
+export const deleteContest = async (req: Request, res: Response) => {
+  try {
+    const contest = await ContestService.delete(req.params.id);
+    return success(res, mapContest(contest), "Contest deleted");
+  } catch (e: any) {
+    return error(res, e.message, 400);
+  }
+};
 
-    return success(
-      res,
-      mapContest(contest),
-      "Contest joined successfully"
-    );
-  } catch (err: any) {
-    const status =
-      err.message === "Already joined contest" ? 409 : 400;
+export const listAllContestsAdmin = async (_req: Request, res: Response) => {
+  const contests = await ContestService.listAll();
+  return success(res, contests.map(mapContest));
+};
 
-    return error(res, err.message, status);
+/* ---------------- USER / PUBLIC ---------------- */
+
+export const listOpenContests = async (_req: Request, res: Response) => {
+  const contests = await ContestService.listOpen();
+  return success(res, contests.map(mapContest));
+};
+
+export const listContestsByMatch = async (req: Request, res: Response) => {
+  try {
+    const contests = await ContestService.listByMatch(req.params.matchId);
+    return success(res, contests.map(mapContest));
+  } catch (e: any) {
+    return error(res, e.message, 400);
+  }
+};
+
+export const getContest = async (req: Request, res: Response) => {
+  try {
+    const contest = await ContestService.getById(req.params.id);
+    return success(res, mapContest(contest));
+  } catch (e: any) {
+    return error(res, e.message, 404);
   }
 };

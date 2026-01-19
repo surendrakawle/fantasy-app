@@ -1,6 +1,14 @@
 import { Router } from "express";
 import { authMiddleware } from "../../middlewares/auth.middleware";
-import { submitPrediction, getPredictionsByContest } from "../../controllers/prediction.controller";
+import { adminOnly } from "../../middlewares/admin.middleware";
+
+import {
+  createPrediction,
+  updatePrediction,
+  deletePrediction,
+  publishCorrectAnswer,
+  listPredictionsByContest
+} from "../../controllers/prediction.controller";
 
 const router = Router();
 
@@ -8,14 +16,16 @@ const router = Router();
  * @swagger
  * tags:
  *   name: Prediction
- *   description: Prediction APIs
+ *   description: Prediction question APIs
  */
+
+/* ================= ADMIN ================= */
 
 /**
  * @swagger
- * /predictions/submit:
+ * /admin/predictions:
  *   post:
- *     summary: Submit prediction
+ *     summary: Create prediction question
  *     tags: [Prediction]
  *     security:
  *       - bearerAuth: []
@@ -23,111 +33,97 @@ const router = Router();
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             type: object
- *             required: [contestId, predictionId, selectedAnswer]
- *             properties:
- *               contestId:
- *                 type: string
- *               predictionId:
- *                 type: string
- *               selectedAnswer:
- *                 type: string
+ *           example:
+ *             contestId: 65abc111
+ *             question: Who will win the toss?
+ *             options: ["India", "Australia"]
+ *             points: 10
+ *             order: 1
  *     responses:
- *       200:
- *         description: Prediction submitted
+ *       201:
+ *         description: Prediction created
+ *       400:
+ *         description: Invalid input
+ *       403:
+ *         description: Admin only
+ *       500:
+ *         description: Server error
  */
-router.post("/submit", authMiddleware, submitPrediction);
-
-
+router.post("/admin/predictions", authMiddleware, adminOnly, createPrediction);
 
 /**
  * @swagger
- * tags:
- *   name: Prediction
- *   description: Prediction based contest APIs
+ * /admin/predictions/{id}:
+ *   put:
+ *     summary: Update prediction
+ *     tags: [Prediction]
+ *     security:
+ *       - bearerAuth: []
  */
+router.put("/admin/predictions/:id", authMiddleware, adminOnly, updatePrediction);
+
+/**
+ * @swagger
+ * /admin/predictions/{id}:
+ *   delete:
+ *     summary: Delete prediction
+ *     tags: [Prediction]
+ *     security:
+ *       - bearerAuth: []
+ */
+router.delete("/admin/predictions/:id", authMiddleware, adminOnly, deletePrediction);
+
+/**
+ * @swagger
+ * /admin/predictions/{id}/publish:
+ *   post:
+ *     summary: Publish correct answer
+ *     tags: [Prediction]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             correctAnswer: India
+ *     responses:
+ *       200:
+ *         description: Correct answer published
+ *       400:
+ *         description: Invalid answer
+ *       403:
+ *         description: Admin only
+ *       500:
+ *         description: Server error
+ */
+router.post(
+  "/admin/predictions/:id/publish",
+  authMiddleware,
+  adminOnly,
+  publishCorrectAnswer
+);
+
+/* ================= USER ================= */
 
 /**
  * @swagger
  * /predictions/contest/{contestId}:
  *   get:
- *     summary: Get all predictions for a contest
+ *     summary: Get predictions by contest
  *     tags: [Prediction]
- *     security:
- *       - bearerAuth: []
- *
  *     parameters:
- *       - in: path
- *         name: contestId
+ *       - name: contestId
+ *         in: path
  *         required: true
- *         description: Contest ID
  *         schema:
  *           type: string
- *         example: 65ca222abc
- *
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         example: 1
- *
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         example: 20
- *
  *     responses:
  *       200:
- *         description: Predictions fetched successfully
- *         content:
- *           application/json:
- *             example:
- *               success: true
- *               message: Predictions fetched
- *               data:
- *                 predictions:
- *                   - id: 65pr1
- *                     question: Who will win the toss?
- *                     options: ["India", "Australia"]
- *                     points: 10
- *                     order: 1
- *                   - id: 65pr2
- *                     question: Total runs in powerplay ≥ 50?
- *                     options: ["YES", "NO"]
- *                     points: 5
- *                     order: 2
- *                 pagination:
- *                   page: 1
- *                   limit: 20
- *                   total: 8
- *                   totalPages: 1
- *
- *       400:
- *         description: Invalid contestId
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: contestId is required
- *
- *       401:
- *         description: Unauthorized
- *
+ *         description: Prediction list
  *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: Internal server error
+ *         description: Server error
  */
-router.get(
-  "/contest/:contestId",
-  authMiddleware,
-  getPredictionsByContest
-);
-
+router.get("/predictions/contest/:contestId", listPredictionsByContest);
 
 export default router;

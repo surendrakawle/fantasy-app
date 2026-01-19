@@ -1,44 +1,53 @@
-import { Schema, model, Types } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-export interface IContest {
-  match: Types.ObjectId;
-  entryFee: number;
+export interface IContest extends Document {
+  matchId: mongoose.Types.ObjectId;
+  contestType: "TEAM" | "PREDICTION";
+
+  // TEAM contest
+  entryFee?: number;
+
+  // PREDICTION contest
+  baseAmount?: number;
+  multiplier?: number; // 2x, 3x, 5x
+
   prizePool: number;
   maxParticipants: number;
   joinedCount: number;
-  lockTime: Date; // 🔒 when predictions close
-  contestType: "TEAM" | "PREDICTION";
-  status: "OPEN" | "LOCKED" | "LIVE" | "COMPLETED";
+  lockTime: Date;
+  status: "OPEN" | "LOCKED" | "COMPLETED";
   createdAt: Date;
 }
 
 const contestSchema = new Schema<IContest>({
-  match: {
+  matchId: {
     type: Schema.Types.ObjectId,
     ref: "Match",
-    index: true,
-    required: true
+    required: true,
+    index: true
   },
-  entryFee: { type: Number, required: true },
-  prizePool: { type: Number, required: true },
-  maxParticipants: { type: Number, required: true },
-  joinedCount: { type: Number, default: 0 },
-  lockTime: {
-    type: Date,
-    required: true
-  },
+
   contestType: {
     type: String,
     enum: ["TEAM", "PREDICTION"],
-    default: "PREDICTION"
+    required: true
   },
-  status: {
-    type: String,
-    enum: ["OPEN", "LOCKED", "LIVE", "COMPLETED"],
-    default: "OPEN",
-    index: true
-  },
+
+  /* TEAM contest */
+  entryFee: { type: Number },
+
+  /* PREDICTION contest */
+  baseAmount: { type: Number },     // base entry
+  multiplier: { type: Number },     // 2, 3, 5 etc
+
+  prizePool: { type: Number, required: true },
+  maxParticipants: { type: Number, required: true },
+  joinedCount: { type: Number, default: 0 },
+
+  lockTime: { type: Date, required: true },
+  status: { type: String, default: "OPEN", index: true },
+
   createdAt: { type: Date, default: Date.now }
 });
 
-export const Contest = model<IContest>("Contest", contestSchema);
+export const Contest = mongoose.model<IContest>("Contest", contestSchema);

@@ -1,85 +1,79 @@
-
-
 import { Router } from "express";
 import { authMiddleware } from "../../middlewares/auth.middleware";
-import { getMyPredictionsByContest } from "../../controllers/userPrediction.controller";
+import {
+  submitPrediction,
+  listMyPredictions
+} from "../../controllers/userPrediction.controller";
 
 const router = Router();
-
-
-
-
 
 /**
  * @swagger
  * tags:
- *   name: User Predictions
- *   description: User selected answers APIs
+ *   name: User Prediction
+ *   description: User prediction APIs
  */
 
 /**
  * @swagger
- * /user/predictions/{contestId}:
- *   get:
- *     summary: Get my selected prediction answers for a contest
- *     tags: [User Predictions]
+ * /user-predictions/submit:
+ *   post:
+ *     summary: Submit prediction with amount
+ *     tags: [User Prediction]
  *     security:
  *       - bearerAuth: []
- *
- *     parameters:
- *       - in: path
- *         name: contestId
- *         required: true
- *         description: Contest ID
- *         schema:
- *           type: string
- *         example: 65ca222abc
- *
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           example:
+ *             contestId: 65abc111
+ *             predictionId: 65pred222
+ *             selectedAnswer: India
+ *             amount: 50
  *     responses:
- *       200:
- *         description: User predictions fetched successfully
+ *       201:
+ *         description: Prediction submitted
  *         content:
  *           application/json:
  *             example:
  *               success: true
- *               message: User predictions fetched
+ *               message: Prediction submitted
  *               data:
- *                 - predictionId: 65pr1
- *                   question: Who will win the toss?
- *                   options: ["India", "Australia"]
- *                   points: 10
- *                   selectedAnswer: India
- *                   order: 1
- *                 - predictionId: 65pr2
- *                   question: Total runs in powerplay ≥ 50?
- *                   options: ["YES", "NO"]
- *                   points: 5
- *                   selectedAnswer: YES
- *                   order: 2
- *
+ *                 amount: 50
+ *                 multiplier: 3
+ *                 potentialWin: 150
  *       400:
- *         description: Invalid contestId
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: contestId is required
- *
+ *         description: Invalid input / Insufficient balance
  *       401:
  *         description: Unauthorized
- *
  *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             example:
- *               success: false
- *               message: Internal server error
+ *         description: Server error
  */
-router.get(
-  "/:contestId",
-  authMiddleware,
-  getMyPredictionsByContest
-);
+router.post("/submit", authMiddleware, submitPrediction);
+
+/**
+ * @swagger
+ * /user-predictions/my/{contestId}:
+ *   get:
+ *     summary: List my predictions by contest
+ *     tags: [User Prediction]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: contestId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: My predictions
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Server error
+ */
+router.get("/my/:contestId", authMiddleware, listMyPredictions);
 
 export default router;
