@@ -2,8 +2,13 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IMatch extends Document {
   sport: string;
+  name: string;
+  venue: string;
+  matchType: string;
+  result: string;
   teamA: string;
   teamB: string;
+  cricketdata: string;
   startTime: Date;
   status: "UPCOMING" | "LIVE" | "COMPLETED" | "CANCELLED";
   resultProcessed: boolean;
@@ -12,6 +17,11 @@ export interface IMatch extends Document {
 
 const matchSchema = new Schema<IMatch>({
   sport: { type: String, default: "CRICKET" },
+  name: { type: String, default: "" },
+  cricketdata: { type: String, default: "" },
+  venue: { type: String, default: "" },
+  matchType: { type: String, default: "" },
+  result: { type: String, default: "" },
   teamA: { type: String, required: true },
   teamB: { type: String, required: true },
   startTime: { type: Date, required: true },
