@@ -10,6 +10,6 @@ export const mapPrediction = (p: IPrediction) => ({
   correctAnswer: p.correctAnswer,
   points: p.points,
   order: p.order,
-
+  odds: p.odds,
   createdAt: p.createdAt
 });
