@@ -16,6 +16,59 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *
+ *   schemas:
+ *     Contest:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           example: 65abc111
+ *         matchId:
+ *           type: string
+ *           example: 65match999
+ *         contestType:
+ *           type: string
+ *           enum: [TEAM, PREDICTION]
+ *           example: PREDICTION
+ *         baseAmount:
+ *           type: number
+ *           example: 10
+ *         multiplier:
+ *           type: number
+ *           example: 3
+ *         prizePool:
+ *           type: number
+ *           example: 500
+ *         maxParticipants:
+ *           type: number
+ *           example: 100
+ *         joinedParticipants:
+ *           type: number
+ *           example: 20
+ *         lockTime:
+ *           type: string
+ *           format: date-time
+ *         status:
+ *           type: string
+ *           enum: [OPEN, LOCKED, COMPLETED]
+ *
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: Something went wrong
+ */
+
+/**
+ * @swagger
  * tags:
  *   name: Contest
  *   description: Contest management APIs
@@ -27,7 +80,7 @@ const router = Router();
  * @swagger
  * /admin/contests:
  *   post:
- *     summary: Create contest (TEAM or PREDICTION)
+ *     summary: Create a contest
  *     tags: [Contest]
  *     security:
  *       - bearerAuth: []
@@ -35,23 +88,27 @@ const router = Router();
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             matchId: 65abc111
- *             contestType: PREDICTION
- *             baseAmount: 10
- *             multiplier: 3
- *             prizePool: 500
- *             maxParticipants: 100
- *             lockTime: 2026-02-10T13:30:00Z
+ *           schema:
+ *             $ref: '#/components/schemas/Contest'
  *     responses:
  *       201:
- *         description: Contest created
+ *         description: Contest created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Contest'
  *       400:
- *         description: Invalid input
+ *         description: Invalid request data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Unauthorized
  *       403:
- *         description: Admin only
+ *         description: Admin access only
  *       500:
- *         description: Server error
+ *         description: Internal server error
  */
 router.post("/admin/contests", authMiddleware, adminOnly, createContest);
 
@@ -63,6 +120,31 @@ router.post("/admin/contests", authMiddleware, adminOnly, createContest);
  *     tags: [Contest]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Contest'
+ *     responses:
+ *       200:
+ *         description: Contest updated successfully
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Admin access only
+ *       404:
+ *         description: Contest not found
+ *       500:
+ *         description: Server error
  */
 router.put("/admin/contests/:id", authMiddleware, adminOnly, updateContest);
 
@@ -74,6 +156,23 @@ router.put("/admin/contests/:id", authMiddleware, adminOnly, updateContest);
  *     tags: [Contest]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contest deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Admin access only
+ *       404:
+ *         description: Contest not found
+ *       500:
+ *         description: Server error
  */
 router.delete("/admin/contests/:id", authMiddleware, adminOnly, deleteContest);
 
@@ -81,13 +180,27 @@ router.delete("/admin/contests/:id", authMiddleware, adminOnly, deleteContest);
  * @swagger
  * /admin/contests:
  *   get:
- *     summary: List all contests (admin)
+ *     summary: List all contests (Admin)
  *     tags: [Contest]
  *     security:
  *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of contests
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Contest'
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Admin access only
+ *       500:
+ *         description: Server error
  */
 router.get("/admin/contests", authMiddleware, adminOnly, listAllContestsAdmin);
-
 
 /* ================= USER / PUBLIC ================= */
 
@@ -97,6 +210,17 @@ router.get("/admin/contests", authMiddleware, adminOnly, listAllContestsAdmin);
  *   get:
  *     summary: List open contests
  *     tags: [Contest]
+ *     responses:
+ *       200:
+ *         description: Open contests list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Contest'
+ *       500:
+ *         description: Server error
  */
 router.get("/contests", listOpenContests);
 
@@ -104,8 +228,21 @@ router.get("/contests", listOpenContests);
  * @swagger
  * /contests/match/{matchId}:
  *   get:
- *     summary: Get contests by match
+ *     summary: Get contests by match ID
  *     tags: [Contest]
+ *     parameters:
+ *       - in: path
+ *         name: matchId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contests for a match
+ *       404:
+ *         description: No contests found
+ *       500:
+ *         description: Server error
  */
 router.get("/contests/match/:matchId", listContestsByMatch);
 
@@ -115,6 +252,23 @@ router.get("/contests/match/:matchId", listContestsByMatch);
  *   get:
  *     summary: Get contest details
  *     tags: [Contest]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Contest details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Contest'
+ *       404:
+ *         description: Contest not found
+ *       500:
+ *         description: Server error
  */
 router.get("/contests/:id", getContest);
 

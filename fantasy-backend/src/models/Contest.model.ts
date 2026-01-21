@@ -11,9 +11,9 @@ export interface IContest extends Document {
   baseAmount?: number;
   multiplier?: number; // 2x, 3x, 5x
 
-  prizePool: number;
-  maxParticipants: number;
-  joinedCount: number;
+  prizePool?: number;
+  maxParticipants?: number;
+  joinedCount?: number;
   lockTime: Date;
   status: "OPEN" | "LOCKED" | "COMPLETED";
   createdAt: Date;
@@ -40,8 +40,8 @@ const contestSchema = new Schema<IContest>({
   baseAmount: { type: Number },     // base entry
   multiplier: { type: Number },     // 2, 3, 5 etc
 
-  prizePool: { type: Number, required: true },
-  maxParticipants: { type: Number, required: true },
+  prizePool: { type: Number, required: false },
+  maxParticipants: { type: Number, required: false },
   joinedCount: { type: Number, default: 0 },
 
   lockTime: { type: Date, required: true },

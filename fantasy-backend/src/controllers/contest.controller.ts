@@ -33,7 +33,9 @@ export const deleteContest = async (req: Request, res: Response) => {
 };
 
 export const listAllContestsAdmin = async (_req: Request, res: Response) => {
+  
   const contests = await ContestService.listAll();
+  console.log("contest", contests)
   return success(res, contests.map(mapContest));
 };
 
