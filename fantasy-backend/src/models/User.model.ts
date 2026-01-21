@@ -17,6 +17,7 @@ export interface IUser {
   lastLoginAt?: Date;
   createdAt: Date;
   updatedAt: Date;
+  profileImageUrl?: String;
 }
 
 const userSchema = new Schema<IUser>(
@@ -59,6 +60,11 @@ const userSchema = new Schema<IUser>(
     isBlocked: {
       type: Boolean,
       default: false
+    },
+
+    profileImageUrl: {
+      type: String,
+      trim: true
     },
 
     // 🕒 Audit fields

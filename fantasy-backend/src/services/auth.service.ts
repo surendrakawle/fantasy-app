@@ -18,9 +18,10 @@ export class AuthService {
       throw new Error("Invalid Google token");
     }
 
-    /* 2️⃣ Find or create user */
+    /* 2️⃣ Find user */
     let user = await User.findOne({ email: payload.email }).populate("role");
 
+    /* 3️⃣ Create user if not exists */
     if (!user) {
       const userRole = await Role.findOne({ name: "USER" });
       if (!userRole) {
@@ -32,19 +33,24 @@ export class AuthService {
         email: payload.email,
         googleId: payload.googleId,
         authProvider: "google",
+        profileImageUrl: payload.picture, // ✅ Google Image URL
         role: userRole._id
       });
 
       await Wallet.create({ userId: user._id });
-      user = await user.populate({path:"role", select:"name permissions"});
+
+      user = await user.populate({
+        path: "role",
+        select: "name permissions"
+      });
     }
 
-    /* 3️⃣ Blocked user check */
+    /* 4️⃣ Blocked user check */
     if (user.isBlocked) {
       throw new Error("User account is blocked");
     }
 
-    /* 4️⃣ Issue JWT */
+    /* 5️⃣ Issue JWT */
     const token = jwt.sign(
       {
         userId: user._id.toString(),
