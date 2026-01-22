@@ -11,5 +11,6 @@ export const mapPrediction = (p: IPrediction) => ({
   points: p.points,
   order: p.order,
   odds: p.odds,
-  createdAt: p.createdAt
+  createdAt: p.createdAt,
+  status: p.status
 });

@@ -3,6 +3,7 @@ import { Schema, model, Types } from "mongoose";
 export type TransactionType =
   | "DEPOSIT"
   | "ENTRY_FEE"
+  | "PREDICT"
   | "WIN"
   | "WITHDRAW"
   | "REFUND";
@@ -35,7 +36,14 @@ const schema = new Schema<ITransaction>({
 
   type: {
     type: String,
-    enum: ["DEPOSIT", "ENTRY_FEE", "WIN", "WITHDRAW", "REFUND"],
+    enum: [
+      "DEPOSIT",
+      "ENTRY_FEE",
+      "PREDICT",
+      "WIN",
+      "WITHDRAW",
+      "REFUND"
+    ],
     index: true,
     required: true
   },

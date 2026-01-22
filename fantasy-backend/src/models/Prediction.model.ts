@@ -10,6 +10,7 @@ export interface IPrediction {
   order: number;
   odds?: number;
   createdAt: Date;
+  status: string;
 }
 
 const schema = new Schema<IPrediction>({
@@ -22,6 +23,7 @@ const schema = new Schema<IPrediction>({
   points: { type: Number },
   odds: { type: Number },
   order: { type: Number, default: 0 },
+  status: { type: String, default: 'OPEN' },
 
   createdAt: { type: Date, default: Date.now }
 });

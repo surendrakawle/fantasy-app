@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { UserPrediction } from "../models/UserPrediction.model";
 import { Contest } from "../models/Contest.model";
 import { Prediction } from "../models/Prediction.model";
-import { debitWallet, creditWallet } from "./wallet.service";
+import { WalletService } from "./wallet.service";
 
 export class UserPredictionService {
 
@@ -29,10 +29,14 @@ export class UserPredictionService {
     const multiplier = contest.multiplier!;
     const potentialWin = amount * multiplier;
 
-    // 🔥 Debit wallet first
-    await debitWallet(userId, amount, `Prediction ${predictionId}`);
+    // 🔥 Debit wallet as PREDICT
+    await WalletService.debitWallet(
+      userId,
+      amount,
+      `Prediction ${predictionId}`,
+      "PREDICT"
+    );
 
-    // Save prediction
     return UserPrediction.create({
       userId: new mongoose.Types.ObjectId(userId),
       contestId,
@@ -44,7 +48,7 @@ export class UserPredictionService {
     });
   }
 
-  /* ---------- SETTLE RESULT (FROM WORKER / ADMIN) ---------- */
+  /* ---------- SETTLE RESULT ---------- */
   static async settlePrediction(
     userPredictionId: string,
     correctAnswer: string,
@@ -62,8 +66,13 @@ export class UserPredictionService {
       winAmount = up.amount * up.multiplier;
       pointsEarned = points;
 
-      // 🔥 Credit wallet
-      await creditWallet(up.userId.toString(), winAmount, "Prediction win");
+      // 🔥 Credit wallet as WIN
+      await WalletService.creditWallet(
+        up.userId.toString(),
+        winAmount,
+        "Prediction win",
+        "WIN"
+      );
     }
 
     up.isCorrect = isCorrect;
