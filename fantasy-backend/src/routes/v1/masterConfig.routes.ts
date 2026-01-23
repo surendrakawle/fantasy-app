@@ -34,11 +34,11 @@ const router = Router();
  *                   helpEmail: help@site.com
  *                   whatsappNumber: "+91xxxxxxxxxx"
  */
-router.get("/", getMasterConfig);
+router.get("/config", getMasterConfig);
 
 /**
  * @swagger
- * /config:
+ * /admin/config:
  *   put:
  *     summary: Update global website configuration (Admin only)
  *     tags: [Master Config]
@@ -65,6 +65,6 @@ router.get("/", getMasterConfig);
  *       500:
  *         description: Server error
  */
-router.put("/", authMiddleware, adminOnly, updateMasterConfig);
+router.put("/admin/config", authMiddleware, adminOnly, updateMasterConfig);
 
 export default router;

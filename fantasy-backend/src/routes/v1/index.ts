@@ -20,12 +20,13 @@ import adminBankRoutes from "./adminBank.routes";
 import depositRoutes from "./deposit.routes";
 import matchRoutes from "./match.routes";
 import transactionRoutes from "./transaction.routes";
+import settlementRoutes from "./settlement.routes";
 const router = Router();
 
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/user-predictions", userPredictionRoutes);
-router.use("/wallet", walletRoutes);
+router.use("/", walletRoutes);
 router.use("/withdraw", withdrawalRoutes);
 router.use("/", contestRoutes);
 router.use("/", predictionRoutes);
@@ -37,10 +38,11 @@ router.use("/teams", teamRoutes);
 router.use("/admin", adminPlayerStatsRoutes);
 router.use("/admin", adminBankRoutes);
 router.use("/players", adminPlayerRoutes);
-router.use("/master/config", masterConfig);
+router.use("/", masterConfig);
 router.use("/payment-methods", masterPaymentMethodRoutes);
 router.use("/user", userBankAccountRoutes);
 router.use("/deposit", depositRoutes);
 router.use("/", matchRoutes);
+router.use("/", settlementRoutes)
 
 export default router;

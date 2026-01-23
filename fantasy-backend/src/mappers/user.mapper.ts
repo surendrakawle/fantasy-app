@@ -7,5 +7,7 @@ export const mapUser = (user: any) => ({
     permissions: user.role?.permissions || []
   },
   isBlocked: user.isBlocked,
-  createdAt: user.createdAt
+  lastLoginAt: user.lastLoginAt,
+  createdAt: user.createdAt,
+  profileImageUrl: user.profileImageUrl
 });

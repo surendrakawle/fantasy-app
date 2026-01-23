@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { authMiddleware } from "../../middlewares/auth.middleware";
-import { getBalance, getTransactions } from "../../controllers/wallet.controller";
+import { adminOnly } from "../../middlewares/admin.middleware";
+import {
+    getBalance, getTransactions, getUserWalletBalanceAdmin,
+    getUserWalletTransactionsAdmin,
+} from "../../controllers/wallet.controller";
+
 
 const router = Router();
 
@@ -23,7 +28,7 @@ const router = Router();
  *       200:
  *         description: Wallet balance
  */
-router.get("/balance", authMiddleware, getBalance);
+router.get("/wallet/balance", authMiddleware, getBalance);
 
 /**
  * @swagger
@@ -37,8 +42,56 @@ router.get("/balance", authMiddleware, getBalance);
  *       200:
  *         description: Transaction list
  */
-router.get("/transactions", authMiddleware, getTransactions);
+router.get("/wallet/transactions", authMiddleware, getTransactions);
 
+/**
+ * @swagger
+ * /admin/wallet/{userId}/balance:
+ *   get:
+ *     summary: Get wallet balance of a user (Admin)
+ *     tags: [Admin Wallet]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Wallet balance
+ */
+router.get(
+    "/admin/wallet/:userId/balance",
+    authMiddleware,
+    adminOnly,
+    getUserWalletBalanceAdmin
+);
 
+/**
+ * @swagger
+ * /admin/wallet/{userId}/transactions:
+ *   get:
+ *     summary: Get wallet transactions of a user (Admin)
+ *     tags: [Admin Wallet]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Wallet transactions
+ */
+router.get(
+    "/admin/wallet/:userId/transactions",
+    authMiddleware,
+    adminOnly,
+    getUserWalletTransactionsAdmin
+);
 
 export default router; 

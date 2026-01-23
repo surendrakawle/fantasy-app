@@ -24,29 +24,52 @@ export class UserPredictionService {
     }
 
     const prediction = await Prediction.findById(predictionId);
-    if (!prediction) throw new Error("Prediction not found");
+    if (!prediction) {
+      throw new Error("Prediction not found");
+    }
+
+    /* 🔥 calculate entry number */
+    const lastEntry = await UserPrediction
+      .findOne({
+        userId,
+        contestId,
+        predictionId,
+        entryNo: { $exists: true }
+      })
+      .sort({ entryNo: -1 })
+      .select("entryNo")
+      .lean();
+
+    const entryNo =
+      lastEntry && Number.isFinite(lastEntry.entryNo)
+        ? lastEntry.entryNo + 1
+        : 1;
+
 
     const multiplier = contest.multiplier!;
     const potentialWin = amount * multiplier;
 
-    // 🔥 Debit wallet as PREDICT
+    /* 🔥 Debit wallet */
     await WalletService.debitWallet(
       userId,
       amount,
-      `Prediction ${predictionId}`,
+      `Prediction ${predictionId} (Entry ${entryNo})`,
       "PREDICT"
     );
 
     return UserPrediction.create({
-      userId: new mongoose.Types.ObjectId(userId),
+      userId,
       contestId,
       predictionId,
+      entryNo,
       selectedAnswer,
       amount,
       multiplier,
-      potentialWin
+      potentialWin,
+      status: "PLACED"
     });
   }
+
 
   /* ---------- SETTLE RESULT ---------- */
   static async settlePrediction(
@@ -65,6 +88,7 @@ export class UserPredictionService {
     if (isCorrect) {
       winAmount = up.amount * up.multiplier;
       pointsEarned = points;
+      up.status = "WON";
 
       // 🔥 Credit wallet as WIN
       await WalletService.creditWallet(
@@ -73,7 +97,12 @@ export class UserPredictionService {
         "Prediction win",
         "WIN"
       );
+    } else {
+      up.status = "LOST";
     }
+
+    up.settled = true;
+    await up.save();
 
     up.isCorrect = isCorrect;
     up.pointsEarned = pointsEarned;
