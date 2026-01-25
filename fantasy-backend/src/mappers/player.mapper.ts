@@ -4,6 +4,7 @@ export const mapPlayer = (player: any) => ({
     team: player.team,
     role: player.role,
     credit: player.credit,
+    profileImageBase64: player.profileImageBase64,
     isActive: player.isActive
   });
   

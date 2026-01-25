@@ -8,9 +8,7 @@ export const mapPrediction = (p: IPrediction) => ({
   options: p.options,
 
   correctAnswer: p.correctAnswer,
-  points: p.points,
   order: p.order,
-  odds: p.odds,
   createdAt: p.createdAt,
   status: p.status
 });
