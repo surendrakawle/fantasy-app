@@ -53,7 +53,7 @@ const router = Router();
  *           example: 1
  *         odds:
  *           type: number
- *           example: 2.5
+ *           example: [2.5, 3.0]
  *         status:
  *           type: string
  *           enum: [ACTIVE, LOCKED, RESULT_DECLARED]

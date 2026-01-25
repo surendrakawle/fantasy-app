@@ -8,7 +8,7 @@ export interface IPrediction {
   correctAnswer?: string;
   points?: number;
   order: number;
-  odds?: number;
+  odds?: number[];
   createdAt: Date;
   status: string;
 }
@@ -21,7 +21,7 @@ const schema = new Schema<IPrediction>({
 
   correctAnswer: { type: String },
   points: { type: Number },
-  odds: { type: Number },
+  odds: { type: [Number], required: true },
   order: { type: Number, default: 0 },
   status: { type: String, default: 'OPEN' },
 
