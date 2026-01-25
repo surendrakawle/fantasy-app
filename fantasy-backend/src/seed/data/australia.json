@@ -1,0 +1,91 @@
+[
+    {
+      "name": "David Warner",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 9.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Steve Smith",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 10,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Marnus Labuschagne",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 9,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Mitchell Marsh",
+      "team": "AUS",
+      "role": "ALL_ROUNDER",
+      "credit": 9,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Glenn Maxwell",
+      "team": "AUS",
+      "role": "ALL_ROUNDER",
+      "credit": 9.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Alex Carey",
+      "team": "AUS",
+      "role": "WICKET_KEEPER",
+      "credit": 8.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Josh Inglis",
+      "team": "AUS",
+      "role": "WICKET_KEEPER",
+      "credit": 8,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Pat Cummins",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 9.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Mitchell Starc",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 9,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Josh Hazlewood",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 8.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    },
+    {
+      "name": "Adam Zampa",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 8.5,
+      "profileImageBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwMB/6XKZ9kAAAAASUVORK5CYII=",
+      "isActive": true
+    }
+  ]
+  

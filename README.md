@@ -258,3 +258,14 @@ I can give you:
 
 
 
+72 runs  = 72 pts
+8 fours = 8 pts
+2 sixes = 4 pts
+50 bonus = 8 pts
+1 catch = 8 pts
+----------------
+TOTAL = 100 pts
+
+
+
+

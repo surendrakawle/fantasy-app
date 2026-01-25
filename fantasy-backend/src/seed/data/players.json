@@ -1,0 +1,74 @@
+[
+    {
+      "name": "Virat Kohli",
+      "team": "IND",
+      "role": "BATSMAN",
+      "credit": 10,
+      "isActive": true
+    },
+    {
+      "name": "Rohit Sharma",
+      "team": "IND",
+      "role": "BATSMAN",
+      "credit": 9.5,
+      "isActive": true
+    },
+    {
+      "name": "Jasprit Bumrah",
+      "team": "IND",
+      "role": "BOWLER",
+      "credit": 9,
+      "isActive": true
+    },
+    {
+      "name": "Hardik Pandya",
+      "team": "IND",
+      "role": "ALL_ROUNDER",
+      "credit": 9,
+      "isActive": true
+    },
+    {
+      "name": "MS Dhoni",
+      "team": "IND",
+      "role": "WICKET_KEEPER",
+      "credit": 8.5,
+      "isActive": true
+    },
+  
+    {
+      "name": "Steve Smith",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 9.5,
+      "isActive": true
+    },
+    {
+      "name": "David Warner",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 9,
+      "isActive": true
+    },
+    {
+      "name": "Pat Cummins",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 9,
+      "isActive": true
+    },
+    {
+      "name": "Glenn Maxwell",
+      "team": "AUS",
+      "role": "ALL_ROUNDER",
+      "credit": 9.5,
+      "isActive": true
+    },
+    {
+      "name": "Alex Carey",
+      "team": "AUS",
+      "role": "WICKET_KEEPER",
+      "credit": 8,
+      "isActive": true
+    }
+  ]
+  

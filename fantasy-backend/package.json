@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "pm2:start": "pm2 start ecosystem.config.js",
     "pm2:stop": "pm2 stop fantasy-backend",
-    "pm2:restart": "pm2 restart fantasy-backend"
+    "pm2:restart": "pm2 restart fantasy-backend",
+    "seed:players": "npx ts-node src/seed/players.seed.ts"
   },
   "dependencies": {
     "@bull-board/api": "^6.16.2",

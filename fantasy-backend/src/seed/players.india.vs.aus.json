@@ -1,0 +1,43 @@
+[
+    {
+      "externalId": "ind_virat_18",
+      "name": "Virat Kohli",
+      "team": "IND",
+      "role": "BATSMAN",
+      "credit": 10.5,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    },
+    {
+      "externalId": "ind_rohit_45",
+      "name": "Rohit Sharma",
+      "team": "IND",
+      "role": "BATSMAN",
+      "credit": 10,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    },
+    {
+      "externalId": "ind_bumrah_93",
+      "name": "Jasprit Bumrah",
+      "team": "IND",
+      "role": "BOWLER",
+      "credit": 9,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    },
+    {
+      "externalId": "aus_warner_31",
+      "name": "David Warner",
+      "team": "AUS",
+      "role": "BATSMAN",
+      "credit": 10,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    },
+    {
+      "externalId": "aus_starc_56",
+      "name": "Mitchell Starc",
+      "team": "AUS",
+      "role": "BOWLER",
+      "credit": 9.5,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII="
+    }
+  ]
+  
