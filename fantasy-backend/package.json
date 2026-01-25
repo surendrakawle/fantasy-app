@@ -12,7 +12,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "npx ts-node src/scripts/seed.ts",
-    "seed1": "npx ts-node src/scripts/seed/players.ts",
+    "seed1": "npx ts-node src/seed/players.ts",
     "lint": "eslint . --ext .ts",
     "bullmq": "npm list bullmq",
     "lint:fix": "eslint . --ext .ts --fix",
@@ -20,7 +20,6 @@
     "pm2:start": "pm2 start ecosystem.config.js",
     "pm2:stop": "pm2 stop fantasy-backend",
     "pm2:restart": "pm2 restart fantasy-backend",
-    "seed:players": "npx ts-node src/seed/players.seed.ts"
   },
   "dependencies": {
     "@bull-board/api": "^6.16.2",
