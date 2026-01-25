@@ -12,6 +12,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "seed": "npx ts-node src/scripts/seed.ts",
+    "seed1": "npx ts-node src/scripts/seed/players.ts",
     "lint": "eslint . --ext .ts",
     "bullmq": "npm list bullmq",
     "lint:fix": "eslint . --ext .ts --fix",
