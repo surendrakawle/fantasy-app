@@ -22,6 +22,7 @@ export interface ITransaction {
 
   amount: number;          // + credit, - debit
   reason?: string;
+  currentWalletAmount?: string;
 
   createdAt: Date;
 }
@@ -75,6 +76,11 @@ const schema = new Schema<ITransaction>({
   amount: {
     type: Number,
     required: true
+  },
+
+  currentWalletAmount: {
+    type: Number,
+    required: false
   },
 
   reason: {

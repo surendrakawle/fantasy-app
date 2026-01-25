@@ -6,10 +6,10 @@ import { UserTeam } from "../models/UserTeam.model";
 
 export const createTeam = async (req: any, res: Response) => {
   try {
-    const team = await TeamService.createTeam({
-      ...req.body,
-      userId: req.user.userId
-    });
+    const team = await TeamService.createTeam(
+      req.user.userId,
+      req.body
+    );
 
     return success(res, mapUserTeam(team), "Team created", 201);
   } catch (err: any) {

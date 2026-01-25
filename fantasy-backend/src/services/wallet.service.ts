@@ -32,7 +32,7 @@ export class WalletService {
 
     const wallet = await Wallet.findOne({ userId }).session(session);
     if (!wallet) throw new Error("Wallet not found");
-
+    const currentWalletAmount = wallet.balance;
     if (wallet.balance < amount) {
       throw new Error("Insufficient wallet balance");
     }
@@ -47,6 +47,7 @@ export class WalletService {
           amount: -amount,
           type,
           reason,
+          currentWalletAmount
         },
       ],
       { session }
@@ -67,7 +68,7 @@ export class WalletService {
 
     const wallet = await Wallet.findOne({ userId }).session(session);
     if (!wallet) throw new Error("Wallet not found");
-
+    const currentWalletAmount = wallet.balance
     wallet.balance += amount;
     await wallet.save({ session });
 
@@ -78,6 +79,7 @@ export class WalletService {
           amount,
           type,
           reason,
+          currentWalletAmount
         },
       ],
       { session }

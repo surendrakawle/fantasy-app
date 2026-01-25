@@ -36,6 +36,11 @@ export class ContestService {
     return contest;
   }
 
+  static async listByMatch(matchId: string) {
+    return Contest.find({ matchId })
+      .sort({ createdAt: -1 });
+  }
+  
   static async listAll() {
     return Contest.find().sort({ createdAt: -1 });
   }
@@ -44,13 +49,6 @@ export class ContestService {
 
   static async listOpen() {
     return Contest.find({ status: "OPEN" }).sort({ lockTime: 1 });
-  }
-
-  static async listByMatch(matchId: string) {
-    return Contest.find({
-      matchId,
-      status: "OPEN"
-    }).sort({ createdAt: -1 });
   }
 
   static async getById(contestId: string) {

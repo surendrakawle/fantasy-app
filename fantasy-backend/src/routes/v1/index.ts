@@ -21,10 +21,15 @@ import depositRoutes from "./deposit.routes";
 import matchRoutes from "./match.routes";
 import transactionRoutes from "./transaction.routes";
 import settlementRoutes from "./settlement.routes";
+import adminPaymentMethod from "./admin/paymentMethod.routes";
+import userPaymentMethod from "./user/paymentMethod.routes"
+
 const router = Router();
 
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
+router.use("/admin", adminPaymentMethod);
+router.use("/user", userPaymentMethod);
 router.use("/user-predictions", userPredictionRoutes);
 router.use("/", walletRoutes);
 router.use("/withdraw", withdrawalRoutes);

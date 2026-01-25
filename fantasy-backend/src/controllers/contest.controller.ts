@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ContestService } from "../services/contest.service";
 import { mapContest } from "../mappers/contest.mapper";
 import { success, error } from "../utils/ApiResponse";
+import { Types } from "mongoose";
 
 /* ---------------- ADMIN ---------------- */
 
@@ -32,11 +33,32 @@ export const deleteContest = async (req: Request, res: Response) => {
   }
 };
 
-export const listAllContestsAdmin = async (_req: Request, res: Response) => {
-  
-  const contests = await ContestService.listAll();
-  console.log("contest", contests)
-  return success(res, contests.map(mapContest));
+export const listAllContestsAdmin = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { matchId } = req.query;
+
+    let contests;
+
+    if (matchId) {
+      // ✅ Validate ObjectId
+      if (!Types.ObjectId.isValid(matchId as string)) {
+        return error(res, "Invalid matchId", 400);
+      }
+
+      contests = await ContestService.listByMatch(
+        matchId as string
+      );
+    } else {
+      contests = await ContestService.listAll();
+    }
+
+    return success(res, contests.map(mapContest));
+  } catch (e: any) {
+    return error(res, e.message, 500);
+  }
 };
 
 /* ---------------- USER / PUBLIC ---------------- */
