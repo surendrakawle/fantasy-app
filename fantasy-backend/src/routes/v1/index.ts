@@ -24,6 +24,7 @@ import transactionRoutes from "./transaction.routes";
 import settlementRoutes from "./settlement.routes";
 import adminPaymentMethod from "./admin/paymentMethod.routes";
 import userPaymentMethod from "./user/paymentMethod.routes"
+import seedRoutes from "./admin/seed.routes";
 
 const router = Router();
 
@@ -50,6 +51,7 @@ router.use("/payment-methods", masterPaymentMethodRoutes);
 router.use("/user", userBankAccountRoutes);
 router.use("/deposit", depositRoutes);
 router.use("/", matchRoutes);
+router.use("/admin", seedRoutes);
 router.use("/", settlementRoutes)
 
 export default router;
