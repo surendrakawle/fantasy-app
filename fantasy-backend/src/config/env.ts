@@ -22,5 +22,5 @@ export const env = {
   REDIS_DB: Number(process.env.REDIS_DB) || 0,
 
   // Ai
-  OPENAI_API_KEY:process.env.OPENAI_API_KEY,
+  OPENAI_API_KEY:process.env?.OPENAI_API_KEY || "",
 };
