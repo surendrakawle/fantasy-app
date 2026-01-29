@@ -25,7 +25,7 @@ import settlementRoutes from "./settlement.routes";
 import adminPaymentMethod from "./admin/paymentMethod.routes";
 import userPaymentMethod from "./user/paymentMethod.routes"
 import seedRoutes from "./admin/seed.routes";
-import aiRoutes from "./user/ai/playerSuggestion.routes";
+// import aiRoutes from "./user/ai/playerSuggestion.routes";
 import leagueRoutes from "./admin/league.routes";
 import masterTeamRoutes from "./admin/masterTeam.routes";
 
@@ -56,7 +56,7 @@ router.use("/deposit", depositRoutes);
 router.use("/", matchRoutes);
 router.use("/admin", seedRoutes);
 router.use("/", settlementRoutes)
-router.use("/", aiRoutes);
+// router.use("/", aiRoutes);
 router.use("/admin", leagueRoutes);
 router.use("/admin", masterTeamRoutes);
  
