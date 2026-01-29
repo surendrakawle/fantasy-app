@@ -266,6 +266,12 @@ I can give you:
 ----------------
 TOTAL = 100 pts
 
+🧠 FLOW (IMPORTANT)
+User → API (/ai/player-suggestions)
+     → Controller
+     → OpenAI Service
+     → Response (suggested players + reason)
+
 
 
 

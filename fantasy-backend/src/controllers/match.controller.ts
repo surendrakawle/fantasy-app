@@ -1,45 +1,89 @@
 import { Request, Response } from "express";
 import { MatchService } from "../services/match.service";
-import { mapMatch } from "../mappers/match.mapper";
 import { success, error } from "../utils/ApiResponse";
+import { mapMatch } from "../mappers/match.mapper";
 
-/* ---------------- ADMIN ---------------- */
-
-export const createMatch = async (req: Request, res: Response) => {
+/* ---------- CREATE ---------- */
+export const createMatch = async (
+  req: Request,
+  res: Response
+) => {
   try {
     const match = await MatchService.create(req.body);
-    return success(res, mapMatch(match), "Match created", 201);
+    return success(res, mapMatch(match), "Match created");
   } catch (e: any) {
     return error(res, e.message, 400);
   }
 };
 
-export const updateMatch = async (req: Request, res: Response) => {
+/* ---------- LIST ---------- */
+export const listMatches = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    const match = await MatchService.update(req.params.id, req.body);
+    const filters: any = {};
+
+    if (req.query.leagueId) {
+      filters.leagueId = req.query.leagueId;
+    }
+
+    if (req.query.status) {
+      filters.status = req.query.status;
+    }
+
+    const matches = await MatchService.listAll(filters);
+    return success(
+      res,
+      matches.map(mapMatch),
+      "Matches fetched"
+    );
+  } catch (e: any) {
+    return error(res, e.message, 500);
+  }
+};
+
+/* ---------- GET ---------- */
+export const getMatch = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const match = await MatchService.getById(
+      req.params.id
+    );
+    return success(res, mapMatch(match));
+  } catch (e: any) {
+    return error(res, e.message, 404);
+  }
+};
+
+/* ---------- UPDATE ---------- */
+export const updateMatch = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const match = await MatchService.update(
+      req.params.id,
+      req.body
+    );
     return success(res, mapMatch(match), "Match updated");
   } catch (e: any) {
     return error(res, e.message, 400);
   }
 };
 
-export const deleteMatch = async (req: Request, res: Response) => {
+/* ---------- DELETE ---------- */
+export const deleteMatch = async (
+  req: Request,
+  res: Response
+) => {
   try {
-    const match = await MatchService.delete(req.params.id);
-    return success(res, mapMatch(match), "Match deleted");
+    await MatchService.remove(req.params.id);
+    return success(res, null, "Match deleted");
   } catch (e: any) {
     return error(res, e.message, 400);
-  }
-};
-
-/* ---------------- USER ---------------- */
-
-export const getMatch = async (req: Request, res: Response) => {
-  try {
-    const match = await MatchService.getById(req.params.id);
-    return success(res, mapMatch(match));
-  } catch (e: any) {
-    return error(res, e.message, 404);
   }
 };
 
@@ -48,7 +92,4 @@ export const listUpcomingMatches = async (_req: Request, res: Response) => {
   return success(res, matches.map(mapMatch));
 };
 
-export const listAllMatches = async (_req: Request, res: Response) => {
-  const matches = await MatchService.listAll();
-  return success(res, matches.map(mapMatch));
-};
+

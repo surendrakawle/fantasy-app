@@ -5,7 +5,7 @@ import {
   deleteMatch,
   getMatch,
   listUpcomingMatches,
-  listAllMatches
+  listMatches
 } from "../../controllers/match.controller";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 import { adminOnly } from "../../middlewares/admin.middleware";
@@ -156,7 +156,7 @@ router.get("/matches/upcoming", listUpcomingMatches);
  *       500:
  *         description: Server error
  */
-router.get("/matches", listAllMatches);
+router.get("/matches", listMatches);
 
 /**
  * @swagger
@@ -182,3 +182,6 @@ router.get("/matches", listAllMatches);
 router.get("/matches/:id", getMatch);
 
 export default router;
+
+
+

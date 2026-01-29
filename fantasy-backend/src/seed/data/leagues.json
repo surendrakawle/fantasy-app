@@ -1,0 +1,45 @@
+[
+    {
+      "name": "Indian Premier League 2025",
+      "shortName": "IPL",
+      "season": "2025",
+      "sport": "CRICKET",
+      "isActive": true
+    },
+    {
+      "name": "ICC Cricket World Cup 2023",
+      "shortName": "CWC",
+      "season": "2023",
+      "sport": "CRICKET",
+      "isActive": true
+    },
+    {
+      "name": "ICC T20 World Cup 2024",
+      "shortName": "T20WC",
+      "season": "2024",
+      "sport": "CRICKET",
+      "isActive": true
+    },
+    {
+      "name": "Big Bash League 2024",
+      "shortName": "BBL",
+      "season": "2024",
+      "sport": "CRICKET",
+      "isActive": true
+    },
+    {
+      "name": "Pakistan Super League 2024",
+      "shortName": "PSL",
+      "season": "2024",
+      "sport": "CRICKET",
+      "isActive": true
+    },
+    {
+      "name": "The Hundred 2024",
+      "shortName": "100",
+      "season": "2024",
+      "sport": "CRICKET",
+      "isActive": true
+    }
+  ]
+  

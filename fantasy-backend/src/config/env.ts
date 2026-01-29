@@ -20,4 +20,7 @@ export const env = {
   REDIS_PORT: Number(process.env.REDIS_PORT) || 6379,
   REDIS_PASSWORD: process.env.REDIS_PASSWORD || undefined,
   REDIS_DB: Number(process.env.REDIS_DB) || 0,
+
+  // Ai
+  OPENAI_API_KEY:process.env.OPENAI_API_KEY,
 };

@@ -1,43 +1,62 @@
+
 import { Match } from "../models/Match.model";
+import {
+  CreateMatchPayload,
+  UpdateMatchPayload
+} from "../types/match";
 
 export class MatchService {
+  static async create(payload: CreateMatchPayload) {
+    if (payload.teamA === payload.teamB) {
+      throw new Error("Team A and Team B must be different");
+    }
 
-  /* ---------- ADMIN ---------- */
-
-  static async create(data: any) {
-    return Match.create(data);
+    return Match.create({
+      ...payload,
+    });
   }
-
-  static async update(matchId: string, data: any) {
-    const match = await Match.findByIdAndUpdate(
-      matchId,
-      data,
-      { new: true }
-    );
-
-    if (!match) throw new Error("Match not found");
-    return match;
-  }
-
-  static async delete(matchId: string) {
-    const match = await Match.findByIdAndDelete(matchId);
-    if (!match) throw new Error("Match not found");
-    return match;
-  }
-
-  static async getById(matchId: string) {
-    const match = await Match.findById(matchId);
-    if (!match) throw new Error("Match not found");
-    return match;
-  }
-
-  /* ---------- USER / PUBLIC ---------- */
-
+  
   static async listUpcoming() {
     return Match.find({ status: "UPCOMING" }).sort({ startTime: 1 });
   }
+  
+  static async listAll(filters: any = {}) {
+    return Match.find(filters)
+      .populate("teamA teamB leagueId")
+      .sort({ startTime: 1 });
+  }
 
-  static async listAll() {
-    return Match.find().sort({ createdAt: -1 });
+  static async getById(id: string) {
+    const match = await Match.findById(id)
+      .populate("teamA teamB leagueId");
+
+    if (!match) {
+      throw new Error("Match not found");
+    }
+    return match;
+  }
+
+  static async update(
+    id: string,
+    payload: UpdateMatchPayload
+  ) {
+    const match = await Match.findByIdAndUpdate(
+      id,
+      payload,
+      { new: true }
+    );
+
+    if (!match) {
+      throw new Error("Match not found");
+    }
+    return match;
+  }
+
+  static async remove(id: string) {
+    const match = await Match.findByIdAndDelete(id);
+    if (!match) {
+      throw new Error("Match not found");
+    }
   }
 }
+

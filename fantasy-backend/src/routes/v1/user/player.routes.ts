@@ -3,8 +3,7 @@ import {
   createPlayer,
   listPlayers,
   getPlayer,
-  updatePlayer,
-  deactivatePlayer
+  getPlayersByTeam
 } from "../../../controllers/player.controller";
 import { authMiddleware } from "../../../middlewares/auth.middleware";
 import { adminOnly } from "../../../middlewares/admin.middleware";
@@ -111,5 +110,54 @@ router.get("/players", authMiddleware, listPlayers);
  *         description: Internal server error
  */
 router.get("/players/:id", authMiddleware, getPlayer);
+
+/* -------------------------------------------------------------------------- */
+/*                            GET PLAYERS BY TEAM                             */
+/* -------------------------------------------------------------------------- */
+/**
+ * @swagger
+ * /playersbyteam:
+ *   get:
+ *     summary: Get players by team code(s)
+ *     description: Fetch players for one or more teams. Pass multiple codes separated by commas.
+ *     tags: [Player]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: teams
+ *         required: true
+ *         description: Comma-separated team codes (e.g., IND or IND,ENG)
+ *         schema:
+ *           type: string
+ *         example: IND,ENG
+ *     responses:
+ *       200:
+ *         description: Players fetched successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               success: true
+ *               message: Players fetched
+ *               data:
+ *                 - id: 65p1
+ *                   name: Virat Kohli
+ *                   code: VK18
+ *                   teamCode: IND
+ *                 - id: 65p2
+ *                   name: Jos Buttler
+ *                   code: JB63
+ *                   teamCode: ENG
+ *       400:
+ *         description: Bad Request - Missing team codes
+ *       404:
+ *         description: No players found for these teams
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/playersbyteam", authMiddleware, getPlayersByTeam);
+
 
 export default router;

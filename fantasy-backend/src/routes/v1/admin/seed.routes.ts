@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authMiddleware } from "../../../middlewares/auth.middleware";
 import { adminOnly } from "../../../middlewares/admin.middleware";
-import { seedPlayers } from "../../../controllers/admin/seed.controller";
+import { commonSeed } from "../../../controllers/admin/commonSeed.controller";
 
 const router = Router();
 
@@ -9,14 +9,14 @@ const router = Router();
  * @swagger
  * tags:
  *   name: Admin Seed
- *   description: Database seed operations
+ *   description: Common database seeding
  */
 
 /**
  * @swagger
- * /admin/seed/players:
+ * /admin/seed:
  *   post:
- *     summary: Seed players from JSON file
+ *     summary: Seed database from JSON file
  *     tags: [Admin Seed]
  *     security:
  *       - bearerAuth: []
@@ -25,12 +25,14 @@ const router = Router();
  *       content:
  *         application/json:
  *           example:
- *             file: australia.json
+ *             file: players.json
+ *             model: Player
+ *             uniqueBy: ["name", "team"]
  *     responses:
  *       200:
- *         description: Players seeded
+ *         description: Seed successful
  *       400:
- *         description: Invalid input
+ *         description: Bad request
  *       401:
  *         description: Unauthorized
  *       403:
@@ -39,10 +41,10 @@ const router = Router();
  *         description: Server error
  */
 router.post(
-  "/seed/players",
+  "/seed",
   authMiddleware,
   adminOnly,
-  seedPlayers
+  commonSeed
 );
 
 export default router;

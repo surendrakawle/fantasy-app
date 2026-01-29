@@ -11,8 +11,8 @@ export class ContestService {
     }
 
     if (data.contestType === "PREDICTION") {
-      if (!data.baseAmount || !data.multiplier) {
-        throw new Error("Base amount & multiplier required for PREDICTION contest");
+      if (!data.baseAmount) {
+        throw new Error("Base amount for PREDICTION contest");
       }
     }
 
@@ -38,9 +38,25 @@ export class ContestService {
 
   static async listByMatch(matchId: string) {
     return Contest.find({ matchId })
+      .populate({
+        path: "matchId",
+        select: "name teamA teamB",
+        populate: [
+          {
+            path: "teamA",
+            model: "Team",
+            select: "code name",
+          },
+          {
+            path: "teamB",
+            model: "Team",
+            select: "code name",
+          }
+        ]
+      })
       .sort({ createdAt: -1 });
   }
-  
+
   static async listAll() {
     return Contest.find().sort({ createdAt: -1 });
   }

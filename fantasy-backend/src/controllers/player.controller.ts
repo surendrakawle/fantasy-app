@@ -40,6 +40,22 @@ export const getPlayer = async (req: Request, res: Response) => {
   }
 };
 
+// Example: GET /players?teams=ENG,IND
+export const getPlayersByTeam = async (req: Request, res: Response) => {
+  try { 
+    const { teams } = req.query;
+    
+    if (!teams) {
+      return error(res, "Team codes are required", 400);
+    }
+    console.log("teams", teams)
+    const players = await PlayerService.getByTeam(teams as string);
+    return success(res, players.map(mapPlayer), "Player fetched");
+  } catch (e: any) {
+    return error(res, e.message, 404);
+  }
+}
+
 export const updatePlayer = async (req: Request, res: Response) => {
   try {
     const player = await PlayerService.update(

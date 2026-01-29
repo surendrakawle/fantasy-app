@@ -14,7 +14,7 @@ export interface IContest extends Document {
   prizePool?: number;
   maxParticipants?: number;
   joinedCount?: number;
-  lockTime: Date;
+  lockTime?: Date;
   status: "OPEN" | "LOCKED" | "COMPLETED";
   createdAt: Date;
 }
@@ -44,7 +44,7 @@ const contestSchema = new Schema<IContest>({
   maxParticipants: { type: Number, required: false },
   joinedCount: { type: Number, default: 0 },
 
-  lockTime: { type: Date, required: true },
+  lockTime: { type: Date, required: false },
   status: { type: String, default: "OPEN", index: true },
 
   createdAt: { type: Date, default: Date.now }

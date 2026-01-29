@@ -1,0 +1,83 @@
+[
+    {
+      "name": "India",
+      "shortName": "IND",
+      "code": "IND",
+      "isNational": true,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Pakistan",
+      "shortName": "PAK",
+      "code": "PAK",
+      "isNational": true,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Australia",
+      "shortName": "AUS",
+      "code": "AUS",
+      "isNational": true,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "England",
+      "shortName": "ENG",
+      "code": "ENG",
+      "isNational": true,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "New Zealand",
+      "shortName": "NZ",
+      "code": "NZ",
+      "isNational": true,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },  
+    {
+      "name": "Chennai Super Kings",
+      "shortName": "CSK",
+      "code": "CSK",
+      "isNational": false,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Mumbai Indians",
+      "shortName": "MI",
+      "code": "MI",
+      "isNational": false,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Royal Challengers Bangalore",
+      "shortName": "RCB",
+      "code": "RCB",
+      "isNational": false,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Kolkata Knight Riders",
+      "shortName": "KKR",
+      "code": "KKR",
+      "isNational": false,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    },
+    {
+      "name": "Rajasthan Royals",
+      "shortName": "RR",
+      "code": "RR",
+      "isNational": false,
+      "logoBase64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAA...",
+      "isActive": true
+    }
+  ]
+  
