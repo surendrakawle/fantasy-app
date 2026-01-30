@@ -6,6 +6,7 @@ export interface ILeague {
   shortName: string;      // IPL
   sport: "CRICKET";       // future-proof
   season: string;         // 2025
+  image: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -24,6 +25,11 @@ const LeagueSchema = new Schema<ILeague>(
       type: String,
       required: true,
       trim: true
+    },
+    
+    image: {
+        type: String,
+        required: false,
     },
 
     sport: {

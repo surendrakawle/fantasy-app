@@ -9,7 +9,7 @@ export const createLeague = async (
   res: Response
 ) => {
   try {
-    const { name, shortName, season } = req.body;
+    const { name, shortName, season, image } = req.body;
 
     if (!name || !shortName || !season) {
       return error(res, "Missing required fields", 400);
@@ -18,7 +18,8 @@ export const createLeague = async (
     const league = await LeagueService.create({
       name,
       shortName,
-      season
+      season, 
+      image
     });
 
     return success(res, mapLeague(league), "League created");

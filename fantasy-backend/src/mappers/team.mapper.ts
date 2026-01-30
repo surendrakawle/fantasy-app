@@ -6,6 +6,7 @@ export const mapTeam = (team: ITeam) => ({
   shortName: team.shortName,
   code: team.code,
   logoBase64: team.logoBase64,
+  logo: team.logo,
   isNational: team.isNational,
   isActive: team.isActive,
   createdAt: team.createdAt

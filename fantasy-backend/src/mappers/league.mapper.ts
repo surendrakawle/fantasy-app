@@ -6,6 +6,7 @@ export const mapLeague = (league: ILeague) => ({
   shortName: league.shortName,
   sport: league.sport,
   season: league.season,
+  image: league.image,
   isActive: league.isActive,
   createdAt: league.createdAt
 });

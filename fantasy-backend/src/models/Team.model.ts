@@ -7,6 +7,7 @@ export interface ITeam {
   shortName: string;     // IND
   code: string;          // IND / PAK / CSK
   logoBase64?: string;   // Base64 PNG/JPEG
+  logo: string;   
 
   sport: "CRICKET";
   isNational: boolean;   // true = India, false = CSK
@@ -39,6 +40,10 @@ const TeamSchema = new Schema<ITeam>(
     },
 
     logoBase64: {
+      type: String
+    },
+
+    logo: {
       type: String
     },
 

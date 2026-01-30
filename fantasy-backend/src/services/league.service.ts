@@ -5,6 +5,7 @@ export class LeagueService {
     name: string;
     shortName: string;
     season: string;
+    image: string;
   }) {
     return League.create(payload);
   }
